@@ -1,0 +1,26 @@
+[
+  { "name": "✨ feat", "color": "F627BF", "description": "new feature" },
+  { "name": "🐛 fix", "color": "D73A4A", "description": "bug fix" },
+  {
+    "name": "👷 refactor",
+    "color": "17DCA0",
+    "description": "change that neither fixes a bug nor adds a feature"
+  },
+  {
+    "name": "📈 perf",
+    "color": "F7EA5E",
+    "description": "change that improves performance"
+  },
+  { "name": "🧪 test", "color": "A2EEEF", "description": "adding missing tests" },
+  {
+    "name": "🧹 chore",
+    "color": "F3F2F2",
+    "description": "changes to the build process or auxiliary tools and libraries"
+  },
+  { "name": "✍️ docs", "color": "2962E8", "description": "documentation only changes" },
+  {
+    "name": "💅 style",
+    "color": "0A312D",
+    "description": "code formatting without changing the meaning"
+  }
+]
