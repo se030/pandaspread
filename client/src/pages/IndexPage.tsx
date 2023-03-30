@@ -1,5 +1,7 @@
+import FileUploader from '@/components/FileUploader';
+
 const IndexPage = () => {
-  return <div>IndexPage</div>;
+  return <FileUploader />;
 };
 
 export default IndexPage;
