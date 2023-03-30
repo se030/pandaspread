@@ -3,23 +3,25 @@ import { api } from './core';
 export const postDataframe: PostDataframeRequest = async (formData) => {
   const headers = { 'Content-Type': 'multipart/formdata' };
 
-  const { data } = await api.post('/dataframe', formData, {
+  const { data: res } = await api.post('/dataframe', formData, {
     headers,
   });
+  const { id, data } = res;
 
-  return data as PostDataframeResponse;
+  return { id, data: JSON.parse(data) } as PostDataframeResponse;
 };
 
 type PostDataframeRequest = (
   formData: FormData,
 ) => Promise<PostDataframeResponse>;
-
-type PostDataframeResponse = { id: string; data: string };
+type PostDataframeResponse = { id: string; data: Dataframe };
 
 export const getDataframe: GetDataframeRequest = async (id) => {
-  const { data } = await api.get(`/dataframe/${id}`);
+  const { data: res } = await api.get(`/dataframe/${id}`);
+  const { data } = res;
 
-  return data as Dataframe;
+  return { data: JSON.parse(data) } as GetDataframeResponse;
 };
 
-type GetDataframeRequest = (id: string) => Promise<Dataframe>;
+type GetDataframeRequest = (id: string) => Promise<GetDataframeResponse>;
+type GetDataframeResponse = { data: Dataframe };

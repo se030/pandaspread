@@ -19,11 +19,9 @@ const FileUploader = () => {
     const formData = new FormData(form);
 
     try {
-      const response = await postDataframe(formData);
+      const { id, data } = await postDataframe(formData);
 
-      const { id, data } = response;
-
-      navigate(`/data/${id}`, { state: { dataframe: JSON.parse(data) } });
+      navigate(`/data/${id}`, { state: { data } });
     } catch (err) {
       console.error(err);
     }
