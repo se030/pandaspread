@@ -1,12 +1,16 @@
+import { ThemeProvider } from '@emotion/react';
 import { BrowserRouter } from 'react-router-dom';
 
-import Routes from './routes';
+import Routes from '@/routes';
+import { theme } from '@/styles/theme';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes />
-    </BrowserRouter>
+    <ThemeProvider theme={theme}>
+      <BrowserRouter>
+        <Routes />
+      </BrowserRouter>
+    </ThemeProvider>
   );
 }
 
