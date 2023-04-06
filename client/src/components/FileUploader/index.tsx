@@ -2,7 +2,7 @@ import { FormEventHandler, useState } from 'react';
 import { BiUpload } from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
 
-import * as S from './style';
+import * as style from './style';
 
 import { postDataframe } from '@/apis/dataframe';
 
@@ -40,17 +40,20 @@ const FileUploader = () => {
   };
 
   return (
-    <S.Form onSubmit={onSubmit}>
-      <S.Label htmlFor="file">{filename ?? <BiUpload size={30} />}</S.Label>
-      <S.HiddenInput
+    <form css={style.form} onSubmit={onSubmit}>
+      <label css={style.label} htmlFor="file">
+        {filename ?? <BiUpload size={30} />}
+      </label>
+      <input
+        css={style.input}
         type="file"
         id="file"
         name="file"
         accept="text/csv"
         onChange={onFileInput}
       />
-      <S.Button>upload</S.Button>
-    </S.Form>
+      <button css={style.button}>upload</button>
+    </form>
   );
 };
 
