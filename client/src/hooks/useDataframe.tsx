@@ -19,10 +19,14 @@ const useDataframe = () => {
   };
 
   useEffect(() => {
-    if (!state || !state.data) loadDataframe();
+    if (!state || !state?.data) {
+      loadDataframe();
+      return;
+    }
 
     setDataframe(state.data);
   }, []);
+
   return { dataframe };
 };
 
