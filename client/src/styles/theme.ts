@@ -1,4 +1,4 @@
-const color = {
+export const color = {
   primary: '#00c9c8',
   offwhite: 'f5f5f5',
   gray100: '#c6c6c6',
@@ -8,3 +8,5 @@ const color = {
 } as const;
 
 export const theme = { color };
+
+export type ThemeColor = typeof color;
