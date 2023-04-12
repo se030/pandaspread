@@ -1,15 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 
 import { getDataframe } from '@/apis/dataframe';
+import { dataframeAtom } from '@/store/atom/dataframe';
 
 const useDataframe = () => {
   const { state } = useLocation();
-
   const { id } = useParams();
-  const [dataframe, setDataframe] = useState<Dataframe | null>(
-    state?.data ?? null,
-  );
+
+  const [dataframe, setDataframe] = useRecoilState(dataframeAtom);
 
   const loadDataframe = async () => {
     if (!id) return;
@@ -19,9 +19,10 @@ const useDataframe = () => {
   };
 
   useEffect(() => {
-    if (!dataframe) loadDataframe();
-  }, []);
+    if (!state || !state.data) loadDataframe();
 
+    setDataframe(state.data);
+  }, []);
   return { dataframe };
 };
 
