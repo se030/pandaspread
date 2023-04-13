@@ -5,12 +5,16 @@ import Loader from '@/components/_common/Loader';
 import Sidebar from '@/components/Sidebar';
 import Table from '@/components/Table';
 import { ColumnContext } from '@/contexts/ColumnContext';
+import { ScrollContext } from '@/contexts/ScrollContext';
 import useDataframe from '@/hooks/useDataframe';
+import { useScroll } from '@/hooks/useScroll';
 
 const DataPage = () => {
   const { dataframe } = useDataframe();
 
   const columnRefs = useRef<HTMLTableCellElement[]>([]);
+
+  const { scrollTop, ref: sectionRef } = useScroll();
 
   return (
     <main css={style.main}>
@@ -18,9 +22,11 @@ const DataPage = () => {
         {dataframe.columns.length ? (
           <>
             <Sidebar />
-            <section css={style.section}>
-              {dataframe && <Table dataframe={dataframe} />}
-            </section>
+            <ScrollContext.Provider value={{ scrollTop }}>
+              <section css={style.section} ref={sectionRef}>
+                {dataframe && <Table dataframe={dataframe} />}
+              </section>
+            </ScrollContext.Provider>
           </>
         ) : (
           <Loader />
