@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { MouseEventHandler, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 
 import { columnViewAtom } from '@/store/atom/columnView';
@@ -19,7 +19,9 @@ const useColumnView = (idx?: number) => {
 
   if (idx === undefined) return { columnView };
 
-  const toggleColumnView = () => {
+  const toggleColumnView: MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.stopPropagation();
+
     setColumnView((prev) => {
       const updated = [...prev];
       updated[idx] = !updated[idx];

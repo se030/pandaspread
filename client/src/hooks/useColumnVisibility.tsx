@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { MouseEventHandler, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 
 import { columnVisibilityAtom } from '@/store/atom/coulmnVisibility';
@@ -20,7 +20,9 @@ const useColumnVisibility = (idx?: number) => {
 
   if (idx === undefined) return { columnVisibility };
 
-  const toggleColumnVisibility = () => {
+  const toggleColumnVisibility: MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.stopPropagation();
+
     setColumnVisibility((prev) => {
       const updated = [...prev];
       updated[idx] = !updated[idx];
