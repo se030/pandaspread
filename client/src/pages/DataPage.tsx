@@ -6,7 +6,7 @@ import Sidebar from '@/components/Sidebar';
 import Table from '@/components/Table';
 import { ColumnContext } from '@/contexts/ColumnContext';
 import { ScrollContext } from '@/contexts/ScrollContext';
-import useDataframe from '@/hooks/useDataframe';
+import { useDataframe } from '@/hooks/useDataframe';
 import { useScroll } from '@/hooks/useScroll';
 
 const DataPage = () => {

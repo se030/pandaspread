@@ -4,7 +4,7 @@ import { useRecoilState } from 'recoil';
 
 import OptionButtons from './OptionButtons';
 
-import useClickFactor from '@/hooks/useClickFactor';
+import { useClickFactor } from '@/hooks/useClickFactor';
 import { dataframeAtom } from '@/store/atom/dataframe';
 import { ThemeColor } from '@/styles/theme';
 

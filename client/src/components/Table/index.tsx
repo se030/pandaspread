@@ -4,7 +4,7 @@ import Td from './Td';
 
 import { ColumnContext } from '@/contexts/ColumnContext';
 import { useColumnVisibility } from '@/hooks/useColumnVisibility';
-import useSafeContext from '@/hooks/useSafeContext';
+import { useSafeContext } from '@/hooks/useSafeContext';
 import { ThemeColor } from '@/styles/theme';
 
 interface Props {

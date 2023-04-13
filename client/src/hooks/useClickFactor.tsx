@@ -1,4 +1,4 @@
-import useSafeContext from './useSafeContext';
+import { useSafeContext } from './useSafeContext';
 
 import { ColumnContext } from '@/contexts/ColumnContext';
 
@@ -18,4 +18,4 @@ const useClickFactor = () => {
   return { onClickFactor };
 };
 
-export default useClickFactor;
+export { useClickFactor };
