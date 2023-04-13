@@ -71,6 +71,13 @@ const style = {
         boxShadow: '0 1px 0 rgba(0, 0, 0, 0.1)',
       },
 
+      thead: {
+        position: 'sticky',
+        top: 0,
+        zIndex: 1,
+        boxShadow: '0 1px 0 rgba(0, 0, 0, 0.1)',
+      },
+
       th: {
         '&:nth-of-type(1)': {
           width: 'fit-content', // Index column
