@@ -1,25 +1,31 @@
 import { css } from '@emotion/react';
+import { useRef } from 'react';
 
 import Loader from '@/components/_common/Loader';
 import Sidebar from '@/components/Sidebar';
 import Table from '@/components/Table';
+import { ColumnContext } from '@/contexts/ColumnContext';
 import useDataframe from '@/hooks/useDataframe';
 
 const DataPage = () => {
   const { dataframe } = useDataframe();
 
+  const columnRefs = useRef<HTMLTableCellElement[]>([]);
+
   return (
     <main css={style.main}>
-      {dataframe.columns.length ? (
-        <>
-          <Sidebar />
-          <section css={style.section}>
-            {dataframe && <Table dataframe={dataframe} />}
-          </section>
-        </>
-      ) : (
-        <Loader />
-      )}
+      <ColumnContext.Provider value={{ columnRefs }}>
+        {dataframe.columns.length ? (
+          <>
+            <Sidebar />
+            <section css={style.section}>
+              {dataframe && <Table dataframe={dataframe} />}
+            </section>
+          </>
+        ) : (
+          <Loader />
+        )}
+      </ColumnContext.Provider>
     </main>
   );
 };
