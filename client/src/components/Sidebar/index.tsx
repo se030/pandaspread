@@ -14,6 +14,7 @@ export default Sidebar;
 
 const style = {
   aside: css({
+    zIndex: 10,
     width: '250px',
     height: '100%',
     padding: '0.5rem',

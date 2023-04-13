@@ -42,7 +42,7 @@ const style = {
   section: css({
     width: 'calc(100% - 250px)',
     height: '100%',
-    padding: '1rem 2rem',
+    padding: '0 2rem 1rem 2rem',
     overflowY: 'scroll',
   }),
 };

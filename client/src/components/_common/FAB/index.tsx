@@ -24,7 +24,7 @@ const style = {
   button: (color: string) =>
     css({
       position: 'absolute',
-      top: 'calc(20px + 1rem)',
+      top: '20px',
       right: '24px',
       width: 'calc(40px + 2rem)',
       height: 'calc(40px + 2rem)',

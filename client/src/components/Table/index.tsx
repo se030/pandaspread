@@ -57,16 +57,23 @@ const Table = ({ dataframe }: Props) => {
 export default Table;
 
 const style = {
-  table: ({ gray100 }: ThemeColor) =>
+  table: ({ offwhite }: ThemeColor) =>
     css({
       width: '100%',
       height: '100%',
       borderCollapse: 'collapse',
 
+      thead: {
+        position: 'sticky',
+        top: 0,
+        zIndex: 1,
+        boxShadow: '0 1px 0 rgba(0, 0, 0, 0.1)',
+      },
+
       th: {
-        padding: '1rem',
+        padding: '2rem 1rem 1.5rem 1rem',
         fontWeight: 'bold',
-        borderBottom: `1px solid ${gray100}`,
+        backgroundColor: offwhite,
       },
       td: {
         padding: '1rem',
