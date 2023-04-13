@@ -10,8 +10,8 @@ interface Props {
 }
 
 const OptionButtons = ({ idx }: Props) => {
-  const { columnView, toggleColumnView } = useColumnView(idx);
-  const { columnVisibility, toggleColumnVisibility } = useColumnVisibility(idx);
+  const { isVisualized, toggleColumnView } = useColumnView(idx);
+  const { isVisible, toggleColumnVisibility } = useColumnVisibility(idx);
 
   const { color } = useTheme();
 
@@ -21,10 +21,10 @@ const OptionButtons = ({ idx }: Props) => {
         css={[style.button(color), style.view]}
         onClick={toggleColumnView}
       >
-        {columnView[idx] ? 'vis' : 'raw'}
+        {isVisualized ? 'vis' : 'raw'}
       </button>
       <button css={style.button(color)} onClick={toggleColumnVisibility}>
-        {columnVisibility[idx] ? (
+        {isVisible ? (
           <BsEyeFill className="icon" />
         ) : (
           <BsEyeSlashFill className="icon" />

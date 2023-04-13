@@ -28,7 +28,7 @@ const useColumnView = (idx?: number) => {
     });
   };
 
-  return { columnView, toggleColumnView };
+  return { isVisualized: columnView[idx], toggleColumnView };
 };
 
 export { useColumnView };

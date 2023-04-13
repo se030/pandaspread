@@ -29,7 +29,7 @@ const useColumnVisibility = (idx?: number) => {
     });
   };
 
-  return { columnVisibility, toggleColumnVisibility };
+  return { isVisible: columnVisibility[idx], toggleColumnVisibility };
 };
 
 export { useColumnVisibility };
