@@ -2,7 +2,9 @@ import { css, useTheme } from '@emotion/react';
 
 import Td from './Td';
 
+import { ColumnContext } from '@/contexts/ColumnContext';
 import { useColumnVisibility } from '@/hooks/useColumnVisibility';
+import useSafeContext from '@/hooks/useSafeContext';
 import { ThemeColor } from '@/styles/theme';
 
 interface Props {
@@ -15,6 +17,8 @@ const Table = ({ dataframe }: Props) => {
 
   const initialSlice = data.slice(0, 100); // TODO: pagination
 
+  const { columnRefs } = useSafeContext(ColumnContext);
+
   const { color } = useTheme();
 
   return (
@@ -23,7 +27,11 @@ const Table = ({ dataframe }: Props) => {
         <tr css={style.tr(columns.length)}>
           <th>Index</th>
           {columns.map((col, idx) => (
-            <th key={col} hidden={!columnVisibility?.[idx]}>
+            <th
+              key={col}
+              hidden={!columnVisibility?.[idx]}
+              ref={(ref) => ref && columnRefs.current.push(ref)}
+            >
               {col}
             </th>
           ))}

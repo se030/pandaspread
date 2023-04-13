@@ -4,18 +4,21 @@ import { useRecoilState } from 'recoil';
 
 import OptionButtons from './OptionButtons';
 
+import useClickFactor from '@/hooks/useClickFactor';
 import { dataframeAtom } from '@/store/atom/dataframe';
 import { ThemeColor } from '@/styles/theme';
 
 const FactorList = () => {
   const [{ columns }] = useRecoilState(dataframeAtom);
 
+  const { onClickFactor } = useClickFactor();
+
   const { color } = useTheme();
 
   return (
     <ol css={style.ol(color)}>
       {columns?.map((el, idx) => (
-        <li key={idx}>
+        <li key={idx} onClick={() => onClickFactor(idx)}>
           <div className="leading">
             <button>
               <RxDragHandleDots2 />
@@ -42,6 +45,10 @@ const style = {
         justifyContent: 'space-between',
         padding: '1rem',
         borderBottom: `1px solid ${gray100}`,
+        cursor: 'pointer',
+        ':hover': {
+          fontWeight: 'bold',
+        },
 
         div: {
           display: 'flex',
