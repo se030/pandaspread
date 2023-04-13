@@ -11,6 +11,8 @@ const DataPage = () => {
   const { dataframe } = useDataframe();
   const columnRefs = useRef<HTMLTableCellElement[]>([]);
 
+  const { scrollTop, ref: sectionRef } = useScroll();
+
   return (
     <main css={style}>
       {dataframe.columns.length ? (
