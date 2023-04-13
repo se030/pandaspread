@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
 
+import Loader from '@/components/_common/Loader';
 import Sidebar from '@/components/Sidebar';
 import Table from '@/components/Table';
 import useDataframe from '@/hooks/useDataframe';
@@ -9,10 +10,16 @@ const DataPage = () => {
 
   return (
     <main css={style.main}>
-      <Sidebar />
-      <section css={style.section}>
-        {dataframe && <Table dataframe={dataframe} />}
-      </section>
+      {dataframe.columns.length ? (
+        <>
+          <Sidebar />
+          <section css={style.section}>
+            {dataframe && <Table dataframe={dataframe} />}
+          </section>
+        </>
+      ) : (
+        <Loader />
+      )}
     </main>
   );
 };
