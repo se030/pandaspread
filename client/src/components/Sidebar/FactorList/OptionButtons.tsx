@@ -43,7 +43,7 @@ export const CleanseButton = ({ naCount }: { naCount: number | null }) => {
 
   return (
     <button css={style.button(color)}>
-      {naCount ?? ''}
+      {naCount === null ? '' : naCount}
       <AiOutlineClear className="icon" />
     </button>
   );
