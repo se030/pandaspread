@@ -114,11 +114,18 @@ class Nullish(Resource):
 
     def delete(self, id):
         global df
-        
+
+        column = request.args.get('column')
+
         try:
-            del df[id]
+            if column:
+                df[id].dropna(subset=[column], inplace=True)
+            else:
+                df[id].dropna(inplace=True)
+            
             return {
-                'success': True
+                'id': id,
+                'data': split_json(df[id])
             }
         
         except Exception as e:
