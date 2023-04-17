@@ -4,17 +4,18 @@ import { useEffect, useRef, useState } from 'react';
 import Table from '../Table';
 
 import { ScrollContext } from '@/contexts/ScrollContext';
+import { useThrottle } from '@/hooks/useThrottle';
 
 const DataSection = () => {
   const [scrollTop, setScrollTop] = useState(0);
   const scrollContainerRef = useRef<HTMLUnknownElement>(null);
 
-  const onScroll = (e: Event) => {
+  const onScroll = useThrottle((e: Event) => {
     const target = e.target;
     if (!(target instanceof HTMLElement)) return;
 
     setScrollTop(target.scrollTop);
-  };
+  });
 
   useEffect(() => {
     const scrollContainer = scrollContainerRef.current;
