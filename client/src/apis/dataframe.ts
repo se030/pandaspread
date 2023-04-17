@@ -25,3 +25,13 @@ export const getDataframe: GetDataframeRequest = async (id) => {
 
 type GetDataframeRequest = (id: string) => Promise<GetDataframeResponse>;
 type GetDataframeResponse = { data: Dataframe };
+
+export const getNACount: GetNACountRequest = async (id: string) => {
+  const { data: res } = await api.get(`/datafrane/${id}/na`);
+  const { data } = res;
+
+  return { data };
+};
+
+type GetNACountRequest = (id: string) => Promise<GetNACountResponse>;
+type GetNACountResponse = { data: number[] };
