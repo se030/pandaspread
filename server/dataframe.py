@@ -87,3 +87,46 @@ class Dataframe(Resource):
         global idx
         idx += 1
         return idx
+
+@api.route('/<int:id>/na')
+class Nullish(Resource):
+
+    def get(self, id=-1):
+        global df, split_json
+        
+        try:
+            if (id in df):
+                total_rows = df[id].shape[0]
+                count_per_column = df[id].count().to_list()
+                
+                return {
+                    'id': id,
+                    'data': list(map(lambda x: total_rows - x, count_per_column))
+                }
+            
+            else:
+                return {
+                    'data': None
+                }
+            
+        except Exception as e:
+            api.abort(500, message=e)
+
+    def delete(self, id):
+        global df
+
+        column = request.args.get('column')
+
+        try:
+            if column:
+                df[id].dropna(subset=[column], inplace=True)
+            else:
+                df[id].dropna(inplace=True)
+            
+            return {
+                'id': id,
+                'data': split_json(df[id])
+            }
+        
+        except Exception as e:
+            api.abort(500, message=e)

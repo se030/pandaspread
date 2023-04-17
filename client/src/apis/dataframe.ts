@@ -8,7 +8,7 @@ export const postDataframe: PostDataframeRequest = async (formData) => {
   });
   const { id, data } = res;
 
-  return { id, data: JSON.parse(data) } as PostDataframeResponse;
+  return { id, data: JSON.parse(data) };
 };
 
 type PostDataframeRequest = (
@@ -20,8 +20,35 @@ export const getDataframe: GetDataframeRequest = async (id) => {
   const { data: res } = await api.get(`/dataframe/${id}`);
   const { data } = res;
 
-  return { data: JSON.parse(data) } as GetDataframeResponse;
+  return { data: JSON.parse(data) };
 };
 
 type GetDataframeRequest = (id: string) => Promise<GetDataframeResponse>;
 type GetDataframeResponse = { data: Dataframe };
+
+export const getNACount: GetNACountRequest = async (id) => {
+  const { data: res } = await api.get(`/dataframe/${id}/na`);
+  const { data } = res;
+
+  return { data };
+};
+
+type GetNACountRequest = (id: string) => Promise<GetNACountResponse>;
+type GetNACountResponse = { data: number[] };
+
+export const deleteNA: DeleteNARequest = async (id, column) => {
+  const { data: res } = await api.delete(`/dataframe/${id}/na`, {
+    params: {
+      column,
+    },
+  });
+  const { data } = res;
+
+  return { data: JSON.parse(data) };
+};
+
+type DeleteNARequest = (
+  id: string,
+  column: string,
+) => Promise<DeleteNAResponse>;
+type DeleteNAResponse = { data: Dataframe };

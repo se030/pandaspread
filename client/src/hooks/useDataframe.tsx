@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
 import { getDataframe } from '@/apis/dataframe';
@@ -11,10 +11,17 @@ const useDataframe = () => {
 
   const [dataframe, setDataframe] = useRecoilState(dataframeAtom);
 
+  const navigate = useNavigate();
+
   const loadDataframe = async () => {
     if (!id) return;
 
     const { data } = await getDataframe(id);
+
+    if (!data) {
+      navigate('/');
+    }
+
     setDataframe(data);
   };
 

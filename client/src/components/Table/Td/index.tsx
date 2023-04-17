@@ -44,14 +44,14 @@ const Td = ({ idx, value, hidden }: Props) => {
       .attr('font-size', '12')
       .attr('x', () => {
         const x = scaleWidth(Number(value));
-        const textLength = `${value}`.length * 7;
+        const textLength = (`${value}`?.length ?? 0) * 7;
         return x + textLength < widthOccupancy ? x + 3 : x - textLength;
       })
       .attr('y', '12');
   }, [isVisualized]);
 
   return (
-    <td hidden={hidden} css={style.td(value.length)}>
+    <td hidden={hidden} css={style.td(value?.length)}>
       {isVisualized && columnScale[idx] ? (
         <svg ref={svgRef} css={style.svg(color)}></svg>
       ) : (
