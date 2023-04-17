@@ -44,7 +44,7 @@ export const deleteNA: DeleteNARequest = async (id, column) => {
   });
   const { data } = res;
 
-  return { data };
+  return { data: JSON.parse(data) };
 };
 
 type DeleteNARequest = (

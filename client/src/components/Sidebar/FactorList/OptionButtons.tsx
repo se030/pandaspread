@@ -1,9 +1,13 @@
 import { css, useTheme } from '@emotion/react';
 import { AiOutlineClear } from 'react-icons/ai';
 import { BsEyeFill, BsEyeSlashFill } from 'react-icons/bs';
+import { useParams } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 
+import { deleteNA } from '@/apis/dataframe';
 import { useColumnView } from '@/hooks/useColumnView';
 import { useColumnVisibility } from '@/hooks/useColumnVisibility';
+import { dataframeAtom } from '@/store/atom/dataframe';
 import { ThemeColor } from '@/styles/theme';
 
 interface Props {
@@ -38,11 +42,26 @@ export const VisibilityButton = ({ idx }: Props) => {
   );
 };
 
-export const CleanseButton = ({ naCount }: { naCount: number | null }) => {
+interface CleanseButtonProps {
+  column: string;
+  naCount: number | null;
+}
+
+export const CleanseButton = ({ column, naCount }: CleanseButtonProps) => {
+  const { id } = useParams();
+  const [, setDataframe] = useRecoilState(dataframeAtom);
+
+  const onCleanse = async () => {
+    if (!id) return;
+
+    const { data } = await deleteNA(id, column);
+    setDataframe(data);
+  };
+
   const { color } = useTheme();
 
   return (
-    <button css={style.button(color)}>
+    <button css={style.button(color)} onClick={onCleanse}>
       {naCount === null ? '' : naCount}
       <AiOutlineClear className="icon" />
     </button>

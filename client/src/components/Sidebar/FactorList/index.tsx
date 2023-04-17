@@ -43,7 +43,7 @@ const FactorList = () => {
           <div css={style.buttonGrid}>
             <ViewButton idx={idx} />
             <VisibilityButton idx={idx} />
-            <CleanseButton naCount={naCounts && naCounts[idx]} />
+            <CleanseButton column={el} naCount={naCounts && naCounts[idx]} />
           </div>
         </li>
       ))}
