@@ -1,4 +1,5 @@
 import { css, useTheme } from '@emotion/react';
+import { MouseEventHandler } from 'react';
 import { AiOutlineClear } from 'react-icons/ai';
 import { BsEyeFill, BsEyeSlashFill } from 'react-icons/bs';
 import { useParams } from 'react-router-dom';
@@ -51,7 +52,9 @@ export const CleanseButton = ({ column, naCount }: CleanseButtonProps) => {
   const { id } = useParams();
   const [, setDataframe] = useRecoilState(dataframeAtom);
 
-  const onCleanse = async () => {
+  const onCleanse: MouseEventHandler = async (e) => {
+    e.stopPropagation();
+
     if (!id) return;
 
     const { data } = await deleteNA(id, column);
