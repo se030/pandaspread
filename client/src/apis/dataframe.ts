@@ -8,7 +8,7 @@ export const postDataframe: PostDataframeRequest = async (formData) => {
   });
   const { id, data } = res;
 
-  return { id, data: JSON.parse(data) } as PostDataframeResponse;
+  return { id, data: JSON.parse(data) };
 };
 
 type PostDataframeRequest = (
@@ -20,7 +20,7 @@ export const getDataframe: GetDataframeRequest = async (id) => {
   const { data: res } = await api.get(`/dataframe/${id}`);
   const { data } = res;
 
-  return { data: JSON.parse(data) } as GetDataframeResponse;
+  return { data: JSON.parse(data) };
 };
 
 type GetDataframeRequest = (id: string) => Promise<GetDataframeResponse>;
