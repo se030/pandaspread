@@ -1,4 +1,5 @@
 import { css, useTheme } from '@emotion/react';
+import { AiOutlineClear } from 'react-icons/ai';
 import { BsEyeFill, BsEyeSlashFill } from 'react-icons/bs';
 
 import { useColumnView } from '@/hooks/useColumnView';
@@ -33,6 +34,20 @@ export const VisibilityButton = ({ idx }: Props) => {
       ) : (
         <BsEyeSlashFill className="icon" />
       )}
+    </button>
+  );
+};
+
+export const CleanseButton = ({
+  idx,
+  naCounts,
+}: Props & { naCounts: number[] | null }) => {
+  const { color } = useTheme();
+
+  return (
+    <button css={style.button(color)}>
+      {naCounts && naCounts[idx]}
+      <AiOutlineClear className="icon" />
     </button>
   );
 };
