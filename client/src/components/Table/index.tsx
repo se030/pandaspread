@@ -1,18 +1,16 @@
 import { css, useTheme } from '@emotion/react';
+import { useRecoilState } from 'recoil';
 
 import Td from './Td';
 
 import { ColumnContext } from '@/contexts/ColumnContext';
 import { useColumnVisibility } from '@/hooks/useColumnVisibility';
 import { useSafeContext } from '@/hooks/useSafeContext';
+import { dataframeAtom } from '@/store/atom/dataframe';
 import { ThemeColor } from '@/styles/theme';
 
-interface Props {
-  dataframe: Dataframe;
-}
-
-const Table = ({ dataframe }: Props) => {
-  const { columns, data } = dataframe;
+const Table = () => {
+  const [{ columns, data }] = useRecoilState(dataframeAtom);
   const { columnVisibility } = useColumnVisibility();
 
   const initialSlice = data.slice(0, 100); // TODO: pagination
