@@ -38,15 +38,12 @@ export const VisibilityButton = ({ idx }: Props) => {
   );
 };
 
-export const CleanseButton = ({
-  idx,
-  naCounts,
-}: Props & { naCounts: number[] | null }) => {
+export const CleanseButton = ({ naCount }: { naCount: number | null }) => {
   const { color } = useTheme();
 
   return (
     <button css={style.button(color)}>
-      {naCounts && naCounts[idx]}
+      {naCount ?? ''}
       <AiOutlineClear className="icon" />
     </button>
   );

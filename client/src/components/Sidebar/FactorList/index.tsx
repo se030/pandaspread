@@ -19,7 +19,7 @@ const FactorList = () => {
   const { id } = useParams();
   const [naCounts, setNaCounts] = useState<number[] | null>(null);
   const loadNaCount = async () => {
-    if (!id) return;
+    if (id === undefined) return;
 
     const { data } = await getNACount(id);
     setNaCounts(data);
@@ -43,7 +43,7 @@ const FactorList = () => {
           <div css={style.buttonGrid}>
             <ViewButton idx={idx} />
             <VisibilityButton idx={idx} />
-            <CleanseButton idx={idx} naCounts={naCounts} />
+            <CleanseButton naCount={naCounts && naCounts[idx]} />
           </div>
         </li>
       ))}
