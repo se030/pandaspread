@@ -26,7 +26,7 @@ const FactorList = () => {
   };
   useEffect(() => {
     loadNaCount();
-  }, []);
+  }, [columns]);
 
   const { color } = useTheme();
 
