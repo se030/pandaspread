@@ -1,21 +1,20 @@
 import { css, useTheme } from '@emotion/react';
+import { useRecoilState } from 'recoil';
 
 import Td from './Td';
 
 import { ColumnContext } from '@/contexts/ColumnContext';
 import { useColumnVisibility } from '@/hooks/useColumnVisibility';
-import useSafeContext from '@/hooks/useSafeContext';
+import { useSafeContext } from '@/hooks/useSafeContext';
+import useVirtualScroll from '@/hooks/useVirtualScroll';
+import { dataframeAtom } from '@/store/atom/dataframe';
 import { ThemeColor } from '@/styles/theme';
 
-interface Props {
-  dataframe: Dataframe;
-}
-
-const Table = ({ dataframe }: Props) => {
-  const { columns, data } = dataframe;
+const Table = () => {
+  const [{ columns, data }] = useRecoilState(dataframeAtom);
   const { columnVisibility } = useColumnVisibility();
 
-  const initialSlice = data.slice(0, 100); // TODO: pagination
+  const { start, offset, style: scrollStyle } = useVirtualScroll(data.length);
 
   const { columnRefs } = useSafeContext(ColumnContext);
 
@@ -24,7 +23,7 @@ const Table = ({ dataframe }: Props) => {
   return (
     <table css={style.table(color)}>
       <thead>
-        <tr css={style.tr(columns.length)}>
+        <tr>
           <th>Index</th>
           {columns.map((col, idx) => (
             <th
@@ -37,10 +36,11 @@ const Table = ({ dataframe }: Props) => {
           ))}
         </tr>
       </thead>
-      <tbody>
-        {initialSlice.map((row, index) => (
+      <tbody css={style.tbody}>
+        <tr css={scrollStyle.dummy(start)}></tr>
+        {data.slice(start, start + offset).map((row, index) => (
           <tr key={index}>
-            <td>{index}</td>
+            <td>{start + index}</td>
             {row.map((value, idx) => (
               <Td
                 key={`${idx}-${value}-${columnVisibility?.[idx]}`}
@@ -49,6 +49,7 @@ const Table = ({ dataframe }: Props) => {
             ))}
           </tr>
         ))}
+        <tr css={scrollStyle.dummy(data.length - start + offset)}></tr>
       </tbody>
     </table>
   );
@@ -57,29 +58,41 @@ const Table = ({ dataframe }: Props) => {
 export default Table;
 
 const style = {
-  table: ({ gray100 }: ThemeColor) =>
+  table: ({ offwhite }: ThemeColor) =>
     css({
       width: '100%',
       height: '100%',
       borderCollapse: 'collapse',
 
-      th: {
-        padding: '1rem',
-        fontWeight: 'bold',
-        borderBottom: `1px solid ${gray100}`,
+      thead: {
+        position: 'sticky',
+        top: 0,
+        zIndex: 1,
+        boxShadow: '0 1px 0 rgba(0, 0, 0, 0.1)',
       },
-      td: {
-        padding: '1rem',
-      },
-    }),
-  tr: (columns: number) =>
-    css({
-      th: {
-        width: `calc(100% / ${columns})`,
 
+      th: {
         '&:nth-of-type(1)': {
-          width: 'fit-content',
+          width: 'fit-content', // Index column
         },
+
+        padding: '2rem 1rem 1.5rem 1rem',
+        fontWeight: 'bold',
+        backgroundColor: offwhite,
       },
     }),
+
+  tbody: css({
+    tr: {
+      borderBottom: '1px solid #e2e2e2',
+      '&:nth-last-of-type(1)': {
+        borderBottom: 'none',
+      },
+    },
+    td: {
+      padding: '1rem',
+      textAlign: 'start',
+      whiteSpace: 'nowrap',
+    },
+  }),
 };

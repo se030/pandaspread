@@ -16,6 +16,7 @@ export default Header;
 const style = {
   header: css({
     position: 'relative',
+    zIndex: 99,
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',

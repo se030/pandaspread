@@ -51,7 +51,7 @@ const Td = ({ idx, value, hidden }: Props) => {
   }, [isVisualized]);
 
   return (
-    <td hidden={hidden}>
+    <td hidden={hidden} css={style.td(value.length)}>
       {isVisualized && columnScale[idx] ? (
         <svg ref={svgRef} css={style.svg(color)}></svg>
       ) : (
@@ -64,6 +64,10 @@ const Td = ({ idx, value, hidden }: Props) => {
 export default Td;
 
 const style = {
+  td: (length: number) =>
+    css({
+      fontSize: length < 10 ? '1rem' : '0.8rem',
+    }),
   svg: ({ black }: ThemeColor) =>
     css({
       '&:hover': {

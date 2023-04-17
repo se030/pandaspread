@@ -30,4 +30,4 @@ const useDataframe = () => {
   return { dataframe };
 };
 
-export default useDataframe;
+export { useDataframe };

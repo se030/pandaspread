@@ -13,4 +13,4 @@ const useSafeContext: <T extends Context<any>>(
   return context;
 };
 
-export default useSafeContext;
+export { useSafeContext };
