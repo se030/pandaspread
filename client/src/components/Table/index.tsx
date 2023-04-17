@@ -1,41 +1,22 @@
-import { css, useTheme } from '@emotion/react';
+import { css } from '@emotion/react';
 import { useRecoilState } from 'recoil';
 
 import Td from './Td';
+import Thead from './Thead';
 
-import { ColumnContext } from '@/contexts/ColumnContext';
 import { useColumnVisibility } from '@/hooks/useColumnVisibility';
-import { useSafeContext } from '@/hooks/useSafeContext';
 import useVirtualScroll from '@/hooks/useVirtualScroll';
 import { dataframeAtom } from '@/store/atom/dataframe';
-import { ThemeColor } from '@/styles/theme';
 
 const Table = () => {
-  const [{ columns, data }] = useRecoilState(dataframeAtom);
+  const [{ data }] = useRecoilState(dataframeAtom);
   const { columnVisibility } = useColumnVisibility();
 
   const { start, offset, style: scrollStyle } = useVirtualScroll(data.length);
 
-  const { columnRefs } = useSafeContext(ColumnContext);
-
-  const { color } = useTheme();
-
   return (
-    <table css={style.table(color)}>
-      <thead>
-        <tr>
-          <th>Index</th>
-          {columns.map((col, idx) => (
-            <th
-              key={col}
-              hidden={!columnVisibility?.[idx]}
-              ref={(ref) => ref && columnRefs.current.push(ref)}
-            >
-              {col}
-            </th>
-          ))}
-        </tr>
-      </thead>
+    <table css={style.table}>
+      <Thead />
       <tbody css={style.tbody}>
         <tr css={scrollStyle.dummy(start)}></tr>
         {data.slice(start, start + offset).map((row, index) => (
