@@ -1,9 +1,13 @@
+import { useTheme } from '@emotion/react';
 import * as d3 from 'd3';
 import { selector } from 'recoil';
 
 import { dataframeAtom } from '@/store/atom/dataframe';
 
-type ColumnScale = d3.ScaleLinear<number, number, never> | null;
+type ColumnScale = {
+  range: d3.ScaleLinear<number, number, never>;
+  color: d3.ScaleSequential<string, never>;
+} | null;
 
 export const columnScaleSelector = selector<ColumnScale[]>({
   key: 'columnScale',
@@ -28,9 +32,19 @@ export const columnScaleSelector = selector<ColumnScale[]>({
       return prev;
     }, initialMaxArray);
 
-    const scale = maxArray.map((value) =>
-      value === -1 ? null : d3.scaleLinear().domain([0, value]),
-    );
+    const { color } = useTheme();
+    const { primary, primaryDark } = color;
+
+    const scale = maxArray.map((value) => {
+      if (value === -1) return null;
+
+      const range = d3.scaleLinear().domain([0, value]);
+      const color = d3
+        .scaleSequential(d3.interpolate(primary, primaryDark))
+        .domain([0, value]);
+
+      return { range, color };
+    });
 
     return scale;
   },

@@ -4,7 +4,12 @@ import { RxDragHandleDots2 } from 'react-icons/rx';
 import { useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
-import { CleanseButton, ViewButton, VisibilityButton } from './OptionButtons';
+import {
+  CleanseButton,
+  SortButton,
+  ViewButton,
+  VisibilityButton,
+} from './OptionButtons';
 
 import { getNACount } from '@/apis/dataframe';
 import { useClickFactor } from '@/hooks/useClickFactor';
@@ -44,6 +49,7 @@ const FactorList = () => {
             <ViewButton idx={idx} />
             <VisibilityButton idx={idx} />
             <CleanseButton column={el} naCount={naCounts && naCounts[idx]} />
+            <SortButton idx={idx} />
           </div>
         </li>
       ))}

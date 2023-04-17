@@ -2,10 +2,14 @@ import { css } from '@emotion/react';
 
 import FAB from '../FAB';
 
+import { useRouter } from '@/hooks/useRouter';
+
 const Header = () => {
+  const { navigateHome } = useRouter();
+
   return (
     <header css={style.header}>
-      <span>🐼</span>
+      <button onClick={navigateHome}>🐼</button>
       <FAB />
     </header>
   );
@@ -24,6 +28,9 @@ const style = {
     height: 'fit-content',
     padding: '20px 24px 16px 24px',
     boxShadow: '0 1px 3px 1px rgba(0, 0, 0, 0.1)',
-    fontSize: '2rem',
+
+    button: {
+      fontSize: '2rem',
+    },
   }),
 };

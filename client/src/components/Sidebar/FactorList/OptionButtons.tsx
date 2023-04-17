@@ -1,6 +1,7 @@
 import { css, useTheme } from '@emotion/react';
 import { MouseEventHandler } from 'react';
 import { AiOutlineClear } from 'react-icons/ai';
+import { BiSortDown, BiSortUp } from 'react-icons/bi';
 import { BsEyeFill, BsEyeSlashFill } from 'react-icons/bs';
 import { useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
@@ -67,6 +68,20 @@ export const CleanseButton = ({ column, naCount }: CleanseButtonProps) => {
     <button css={style.button(color)} onClick={onCleanse}>
       {naCount === null ? '' : naCount}
       <AiOutlineClear className="icon" />
+    </button>
+  );
+};
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const SortButton = ({ idx }: Props) => {
+  const { color } = useTheme();
+
+  return (
+    <button css={style.button(color)} onClick={(e) => e.stopPropagation()}>
+      {
+        // eslint-disable-next-line no-constant-condition
+        true ? <BiSortDown className="icon" /> : <BiSortUp className="icon" />
+      }
     </button>
   );
 };

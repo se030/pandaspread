@@ -19,15 +19,12 @@ const Td = ({ idx, value, hidden }: Props) => {
   const svgRef = useRef<SVGSVGElement>(null);
   const columnScale = useRecoilValue(columnScaleSelector);
 
-  const { color } = useTheme();
-  const { primary } = color;
-
   useEffect(() => {
     const scale = columnScale[idx];
     if (!scale || !svgRef.current) return;
 
     const widthOccupancy = svgRef.current.getBoundingClientRect().width;
-    const scaleWidth = scale.range([0, widthOccupancy]);
+    const scaleWidth = scale.range.range([0, widthOccupancy]);
 
     const canvas = d3.select(svgRef.current).attr('height', '1rem');
 
@@ -35,7 +32,7 @@ const Td = ({ idx, value, hidden }: Props) => {
       .append('rect')
       .attr('width', () => scaleWidth(Number(value)))
       .attr('height', '1rem')
-      .attr('fill', primary);
+      .attr('fill', () => scale.color(Number(value)));
 
     canvas
       .append('text')
@@ -49,6 +46,8 @@ const Td = ({ idx, value, hidden }: Props) => {
       })
       .attr('y', '12');
   }, [isVisualized]);
+
+  const { color } = useTheme();
 
   return (
     <td hidden={hidden} css={style.td(value?.length)}>
