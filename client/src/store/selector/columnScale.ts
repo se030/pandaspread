@@ -1,8 +1,8 @@
-import { useTheme } from '@emotion/react';
 import * as d3 from 'd3';
 import { selector } from 'recoil';
 
 import { dataframeAtom } from '@/store/atom/dataframe';
+import { color } from '@/styles/theme';
 
 type ColumnScale = {
   range: d3.ScaleLinear<number, number, never>;
@@ -32,18 +32,15 @@ export const columnScaleSelector = selector<ColumnScale[]>({
       return prev;
     }, initialMaxArray);
 
-    const { color } = useTheme();
-    const { primary, primaryDark } = color;
-
     const scale = maxArray.map((value) => {
       if (value === -1) return null;
 
       const range = d3.scaleLinear().domain([0, value]);
-      const color = d3
-        .scaleSequential(d3.interpolate(primary, primaryDark))
+      const colorScale = d3
+        .scaleSequential(d3.interpolate(color.primary, color.primaryDark))
         .domain([0, value]);
 
-      return { range, color };
+      return { range, color: colorScale };
     });
 
     return scale;
