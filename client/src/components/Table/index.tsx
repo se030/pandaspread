@@ -5,7 +5,7 @@ import Td from './Td';
 import Thead from './Thead';
 
 import { useColumnVisibility } from '@/hooks/useColumnVisibility';
-import useVirtualScroll from '@/hooks/useVirtualScroll';
+import { useVirtualScroll } from '@/hooks/useVirtualScroll';
 import { dataframeAtom } from '@/store/atom/dataframe';
 
 const Table = () => {

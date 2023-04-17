@@ -37,4 +37,4 @@ const useVirtualScroll = (maxIndex: number) => {
   return { start, offset, style };
 };
 
-export default useVirtualScroll;
+export { useVirtualScroll };
