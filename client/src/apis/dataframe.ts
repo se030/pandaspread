@@ -27,7 +27,7 @@ type GetDataframeRequest = (id: string) => Promise<GetDataframeResponse>;
 type GetDataframeResponse = { data: Dataframe };
 
 export const getNACount: GetNACountRequest = async (id: string) => {
-  const { data: res } = await api.get(`/datafrane/${id}/na`);
+  const { data: res } = await api.get(`/dataframe/${id}/na`);
   const { data } = res;
 
   return { data };
