@@ -45,7 +45,7 @@ const Td = ({ idx, value, hidden }: Props) => {
         return x + textLength < widthOccupancy ? x + 3 : x - textLength;
       })
       .attr('y', '12');
-  }, [isVisualized]);
+  }, [isVisualized, columnScale]);
 
   const { color } = useTheme();
 
