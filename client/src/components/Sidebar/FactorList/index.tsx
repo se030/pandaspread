@@ -2,7 +2,7 @@ import { css, useTheme } from '@emotion/react';
 import { RxDragHandleDots2 } from 'react-icons/rx';
 import { useRecoilState } from 'recoil';
 
-import OptionButtons from './OptionButtons';
+import { ViewButton, VisibilityButton } from './OptionButtons';
 
 import { useClickFactor } from '@/hooks/useClickFactor';
 import { dataframeAtom } from '@/store/atom/dataframe';
@@ -19,14 +19,15 @@ const FactorList = () => {
     <ol css={style.ol(color)}>
       {columns?.map((el, idx) => (
         <li key={idx} onClick={() => onClickFactor(idx)}>
-          <div className="leading">
+          <div>
             <button>
               <RxDragHandleDots2 />
             </button>
             <span>{el}</span>
           </div>
           <div>
-            <OptionButtons idx={idx} />
+            <ViewButton idx={idx} />
+            <VisibilityButton idx={idx} />
           </div>
         </li>
       ))}
@@ -50,13 +51,11 @@ const style = {
           fontWeight: 'bold',
         },
 
-        div: {
+        '& > div:nth-of-type(1)': {
           display: 'flex',
           alignItems: 'center',
           gap: '0.25rem',
-        },
 
-        'div.leading': {
           '& > button': {
             color: gray100,
           },
