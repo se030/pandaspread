@@ -1,6 +1,6 @@
 import { css, useTheme } from '@emotion/react';
 import * as d3 from 'd3';
-import { useEffect, useRef } from 'react';
+import { MouseEventHandler, useEffect, useRef } from 'react';
 import { useRecoilValue } from 'recoil';
 
 import { useColumnView } from '@/hooks/useColumnView';
@@ -26,15 +26,15 @@ const Td = ({ idx, value, hidden }: Props) => {
     const widthOccupancy = svgRef.current.getBoundingClientRect().width;
     const scaleWidth = scale.range.range([0, widthOccupancy]);
 
-    const canvas = d3.select(svgRef.current).attr('height', '1rem');
+    const svg = d3.select(svgRef.current).attr('height', '1rem');
 
-    canvas
+    svg
       .append('rect')
       .attr('width', () => scaleWidth(Number(value)))
       .attr('height', '1rem')
       .attr('fill', () => scale.color(Number(value)));
 
-    canvas
+    svg
       .append('text')
       .text(value)
       .attr('fill', 'none')
@@ -47,12 +47,19 @@ const Td = ({ idx, value, hidden }: Props) => {
       .attr('y', '12');
   }, [isVisualized, columnScale]);
 
+  const onToggleText: MouseEventHandler = (e) => {
+    const { currentTarget } = e;
+    if (!(currentTarget instanceof SVGSVGElement)) return;
+
+    currentTarget.classList.toggle('text');
+  };
+
   const { color } = useTheme();
 
   return (
     <td hidden={hidden} css={style.td(value?.length)}>
       {isVisualized && columnScale[idx] ? (
-        <svg ref={svgRef} css={style.svg(color)}></svg>
+        <svg ref={svgRef} css={style.svg(color)} onClick={onToggleText}></svg>
       ) : (
         value
       )}
@@ -69,7 +76,7 @@ const style = {
     }),
   svg: ({ black }: ThemeColor) =>
     css({
-      '&:hover': {
+      '&:hover, &.text': {
         text: {
           fill: black,
         },

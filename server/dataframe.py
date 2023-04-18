@@ -130,3 +130,48 @@ class Nullish(Resource):
         
         except Exception as e:
             api.abort(500, message=e)
+
+@api.route('/<int:id>/describe')
+class Describe(Resource):
+
+    def get(self, id=-1):
+        global df, split_json
+        
+        try:
+            if (id in df):
+                total_rows = df[id].shape[0]
+                                
+                def describe(col):
+                    desc = df[id][col].describe()
+                    
+                    if 'unique' in desc:
+                        return {
+                            'type': 'categorical',
+                            'count': str(int(desc['count'])),
+                            'unique': str(desc['unique']),
+                            'top': str(desc['top']),
+                            'freq': str(desc['freq'])
+                        }
+                    else:
+                        return {
+                            'type': 'numerical',
+                            'count': str(int(desc['count'])),
+                            'mean': str(desc['mean']),
+                            'std': str(desc['std']),
+                            'min': str(desc['min']),
+                            'max': str(desc['max']),
+                            'data': df[id][col].to_list()[:10000] if desc['count'] == total_rows else []
+                        }
+                
+                return {
+                    'id': id,
+                    'data': list(map(describe, df[id]))
+                }
+            
+            else:
+                return {
+                    'data': None
+                }
+            
+        except Exception as e:
+            api.abort(500, message=e)
