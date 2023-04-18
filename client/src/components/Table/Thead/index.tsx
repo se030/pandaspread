@@ -3,18 +3,16 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
+import Th from './Th';
+
 import { getDescription } from '@/apis/dataframe-describe';
-import { ColumnContext } from '@/contexts/ColumnContext';
 import { useColumnVisibility } from '@/hooks/useColumnVisibility';
-import { useSafeContext } from '@/hooks/useSafeContext';
 import { dataframeAtom } from '@/store/atom/dataframe';
 import { ThemeColor } from '@/styles/theme';
 
 const Thead = () => {
   const [{ data, columns }] = useRecoilState(dataframeAtom);
   const { columnVisibility } = useColumnVisibility();
-
-  const { columnRefs } = useSafeContext(ColumnContext);
 
   const { id } = useParams();
   const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
@@ -44,14 +42,12 @@ const Thead = () => {
           Index<p>{data.length}</p>
         </th>
         {columns.map((col, idx) => (
-          <th
+          <Th
             key={col}
+            title={col}
+            description={descriptions?.[idx]}
             hidden={!columnVisibility?.[idx]}
-            ref={(ref) => ref && columnRefs.current.push(ref)}
-          >
-            {col}
-            {descriptions && getDescriptionElements(descriptions[idx])}
-          </th>
+          />
         ))}
       </tr>
     </thead>
@@ -116,28 +112,4 @@ const style = {
       border: `1px solid ${gray100}`,
       borderRadius: '4px',
     }),
-};
-
-const getDescriptionElements = (desc: Description) => {
-  if (desc.type === 'categorical') {
-    const categoricalDesc = desc as CategoricalDescription;
-
-    return (
-      <>
-        <p>{categoricalDesc.count}</p>
-        <p>
-          {categoricalDesc.freq} {categoricalDesc.top}
-        </p>
-      </>
-    );
-  } else {
-    const numericalDesc = desc as NumericalDescription;
-    return (
-      <>
-        <p>{numericalDesc.count}</p>
-        <p>mean {numericalDesc.mean.toFixed(2)}</p>
-        <p>std {numericalDesc.std.toFixed(2)}</p>
-      </>
-    );
-  }
 };
