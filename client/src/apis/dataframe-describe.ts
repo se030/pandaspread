@@ -9,7 +9,7 @@ export const getDescription: GetDescriptionRequest = async (id) => {
       return Object.entries(row).reduce((prev, [key, value]) => {
         return {
           ...prev,
-          [key]: key === 'type' || key === 'top' ? value : Number(value),
+          [key]: ['type', 'top', 'data'].includes(key) ? value : Number(value),
         };
       }, {});
     }),

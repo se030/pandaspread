@@ -138,7 +138,9 @@ class Describe(Resource):
         global df, split_json
         
         try:
-            if (id in df):                
+            if (id in df):
+                total_rows = df[id].shape[0]
+                                
                 def describe(col):
                     desc = df[id][col].describe()
                     
@@ -157,7 +159,8 @@ class Describe(Resource):
                             'mean': str(desc['mean']),
                             'std': str(desc['std']),
                             'min': str(desc['min']),
-                            'max': str(desc['max'])
+                            'max': str(desc['max']),
+                            'data': df[id][col].to_list() if desc['count'] == total_rows else []
                         }
                 
                 return {

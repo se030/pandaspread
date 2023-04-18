@@ -19,6 +19,7 @@ declare interface NumericalDescription {
   std: number;
   min: number;
   max: number;
+  data: number[];
 }
 
 declare type Description = CategoricalDescription | NumericalDescription;
