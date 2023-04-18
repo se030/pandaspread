@@ -4,7 +4,7 @@ import { selector } from 'recoil';
 import { dataframeAtom } from '@/store/atom/dataframe';
 import { color } from '@/styles/theme';
 
-type ColumnScale = {
+export type ColumnScale = {
   range: d3.ScaleLinear<number, number, never>;
   color: d3.ScaleSequential<string, never>;
 } | null;
