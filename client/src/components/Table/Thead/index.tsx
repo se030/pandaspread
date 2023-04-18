@@ -101,6 +101,11 @@ const style = {
           height: 0,
           marginTop: 0,
         },
+
+        svg: {
+          visibility: 'hidden',
+          height: 0,
+        },
       },
     }),
   button: ({ gray100, gray300 }: ThemeColor) =>
