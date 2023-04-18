@@ -145,7 +145,7 @@ class Describe(Resource):
                     if 'unique' in desc:
                         return {
                             'type': 'categorical',
-                            'count': str(desc['count']),
+                            'count': str(int(desc['count'])),
                             'unique': str(desc['unique']),
                             'top': str(desc['top']),
                             'freq': str(desc['freq'])
@@ -153,7 +153,7 @@ class Describe(Resource):
                     else:
                         return {
                             'type': 'numerical',
-                            'count': str(desc['count']),
+                            'count': str(int(desc['count'])),
                             'mean': str(desc['mean']),
                             'std': str(desc['std']),
                             'min': str(desc['min']),
