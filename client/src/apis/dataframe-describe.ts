@@ -4,7 +4,16 @@ export const getDescription: GetDescriptionRequest = async (id) => {
   const { data: res } = await api.get(`/dataframe/${id}/describe`);
   const { data } = res;
 
-  return { data };
+  return {
+    data: data.map((row: Description) => {
+      return Object.entries(row).reduce((prev, [key, value]) => {
+        return {
+          ...prev,
+          [key]: key === 'type' || key === 'top' ? value : Number(value),
+        };
+      }, {});
+    }),
+  };
 };
 
 type GetDescriptionRequest = (id: string) => Promise<GetDescriptionResponse>;
