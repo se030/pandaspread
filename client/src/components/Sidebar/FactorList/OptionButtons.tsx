@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
 import { deleteNA } from '@/apis/dataframe-na';
+import { putSortBy } from '@/apis/dataframe-sort';
 import { useColumnView } from '@/hooks/useColumnView';
 import { useColumnVisibility } from '@/hooks/useColumnVisibility';
 import { dataframeAtom } from '@/store/atom/dataframe';
@@ -72,12 +73,23 @@ export const CleanseButton = ({ column, naCount }: CleanseButtonProps) => {
   );
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const SortButton = ({ idx }: Props) => {
+export const SortButton = ({ column }: { column: string }) => {
+  const { id } = useParams();
+  const [, setDataframe] = useRecoilState(dataframeAtom);
+
   const { color } = useTheme();
 
+  const onSort: MouseEventHandler = async (e) => {
+    e.stopPropagation();
+
+    if (!id) return;
+
+    const { data } = await putSortBy(id, column, true);
+    setDataframe(data);
+  };
+
   return (
-    <button css={style.button(color)} onClick={(e) => e.stopPropagation()}>
+    <button css={style.button(color)} onClick={onSort}>
       {
         // eslint-disable-next-line no-constant-condition
         true ? <BiSortDown className="icon" /> : <BiSortUp className="icon" />
