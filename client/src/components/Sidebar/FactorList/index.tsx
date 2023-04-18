@@ -11,7 +11,7 @@ import {
   VisibilityButton,
 } from './OptionButtons';
 
-import { getNACount } from '@/apis/dataframe';
+import { getNACount } from '@/apis/dataframe-na';
 import { useClickFactor } from '@/hooks/useClickFactor';
 import { dataframeAtom } from '@/store/atom/dataframe';
 import { ThemeColor } from '@/styles/theme';

@@ -6,7 +6,7 @@ import { BsEyeFill, BsEyeSlashFill } from 'react-icons/bs';
 import { useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
-import { deleteNA } from '@/apis/dataframe';
+import { deleteNA } from '@/apis/dataframe-na';
 import { useColumnView } from '@/hooks/useColumnView';
 import { useColumnVisibility } from '@/hooks/useColumnVisibility';
 import { dataframeAtom } from '@/store/atom/dataframe';
