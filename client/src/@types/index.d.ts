@@ -21,4 +21,4 @@ declare interface NumericalDescription {
   max: number;
 }
 
-declare type Description = CategoricalDescription & NumericalDescription;
+declare type Description = CategoricalDescription | NumericalDescription;
