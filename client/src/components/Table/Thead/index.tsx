@@ -94,7 +94,9 @@ const style = {
       },
 
       '&.hide': {
-        paddingBottom: 0,
+        th: {
+          paddingBottom: 0,
+        },
 
         p: {
           visibility: 'hidden',
