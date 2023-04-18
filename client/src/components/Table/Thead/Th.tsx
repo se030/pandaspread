@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import { useEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 
 import { ColumnContext } from '@/contexts/ColumnContext';
 import { useSafeContext } from '@/hooks/useSafeContext';
@@ -16,7 +16,7 @@ const Th = ({ hidden, title, description }: Props) => {
 
   const svgRef = useRef<SVGSVGElement>(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!svgRef.current) return;
 
     if (
@@ -38,7 +38,7 @@ const Th = ({ hidden, title, description }: Props) => {
       .append('g');
 
     const widthOccupancy = svgRef.current.getBoundingClientRect().width;
-    const heightOccupancy = svgRef.current.getBoundingClientRect().height;
+    const heightOccupancy = 80;
 
     const { data } = description;
 
