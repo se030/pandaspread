@@ -4,6 +4,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import Td from './Td';
 import Thead from './Thead';
 
+import { ROW } from '@/constants/table-row';
 import { useColumnView } from '@/hooks/useColumnView';
 import { useColumnVisibility } from '@/hooks/useColumnVisibility';
 import { useVirtualScroll } from '@/hooks/useVirtualScroll';
@@ -32,10 +33,9 @@ const Table = () => {
   return (
     <table css={style.table(gridTemplateColumns)}>
       <Thead />
-      <tbody css={style.tbody}>
-        <tr css={scrollStyle.dummy(start)}></tr>
+      <tbody css={style.tbody(data.length)}>
         {data.slice(start, start + offset).map((row, index) => (
-          <tr key={index}>
+          <tr key={index} css={scrollStyle(start + index)}>
             <td>{start + index}</td>
             {row.map((value, idx) => (
               <Td
@@ -45,7 +45,6 @@ const Table = () => {
             ))}
           </tr>
         ))}
-        <tr css={scrollStyle.dummy(data.length - (start + offset))}></tr>
       </tbody>
     </table>
   );
@@ -71,19 +70,24 @@ const style = {
       },
     }),
 
-  tbody: css({
-    tr: {
-      borderBottom: '1px solid #e2e2e2',
-      '&:nth-last-of-type(1)': {
-        borderBottom: 'none',
+  tbody: (rows: number) =>
+    css({
+      position: 'relative',
+      height: ROW.HEIGHT * rows,
+
+      tr: {
+        borderBottom: '1px solid #e2e2e2',
+        '&:nth-last-of-type(1)': {
+          borderBottom: 'none',
+        },
       },
-    },
-    td: {
-      padding: '1rem',
-      textAlign: 'start',
-      whiteSpace: 'nowrap',
-    },
-  }),
+
+      td: {
+        padding: '1rem',
+        textAlign: 'center',
+        whiteSpace: 'nowrap',
+      },
+    }),
 };
 
 const calcTableLayout = (

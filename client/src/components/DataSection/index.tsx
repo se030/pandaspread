@@ -15,7 +15,7 @@ const DataSection = () => {
     if (!(target instanceof HTMLElement)) return;
 
     setScrollTop(target.scrollTop);
-  });
+  }, 100);
 
   useEffect(() => {
     const scrollContainer = scrollContainerRef.current;

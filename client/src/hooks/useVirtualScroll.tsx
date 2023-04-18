@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { useEffect, useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 
 import { useSafeContext } from './useSafeContext';
 
@@ -12,9 +12,14 @@ const useVirtualScroll = (maxIndex: number) => {
   const [start, setStart] = useState(0);
   const offset = ROW.VISIBLE + ROW.PADDED;
 
-  useEffect(() => {
-    const startIndex = Math.floor(scrollTop / ROW.HEIGHT);
-    const endIndex = startIndex + Math.ceil(window.outerHeight / ROW.HEIGHT);
+  useLayoutEffect(() => {
+    const scrollBarHeight = window.innerHeight / (maxIndex * ROW.HEIGHT);
+    const currentVisibleNodes = Math.ceil(
+      (window.innerHeight - 150) / ROW.HEIGHT,
+    );
+
+    const startIndex = Math.floor((scrollTop + scrollBarHeight) / ROW.HEIGHT);
+    const endIndex = startIndex + currentVisibleNodes;
 
     // current startIndex x cover visible nodes
     if (startIndex < start) {
@@ -23,16 +28,15 @@ const useVirtualScroll = (maxIndex: number) => {
 
     // current endIndex x cover visible nodes
     if (start + offset < endIndex) {
-      setStart(Math.min(maxIndex, startIndex + ROW.PADDED));
+      setStart(Math.min(maxIndex, endIndex - ROW.VISIBLE));
     }
   }, [scrollTop]);
 
-  const style = {
-    dummy: (occupancy: number) =>
-      css({
-        height: ROW.HEIGHT * occupancy,
-      }),
-  };
+  const style = (index: number) =>
+    css({
+      position: 'absolute',
+      top: ROW.HEIGHT * index,
+    });
 
   return { start, offset, style };
 };
