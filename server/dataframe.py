@@ -160,7 +160,7 @@ class Describe(Resource):
                             'std': str(desc['std']),
                             'min': str(desc['min']),
                             'max': str(desc['max']),
-                            'data': df[id][col].to_list() if desc['count'] == total_rows else []
+                            'data': df[id][col].to_list()[:10000] if desc['count'] == total_rows else []
                         }
                 
                 return {
