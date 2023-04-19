@@ -11,14 +11,14 @@ def split_json(df):
     return df.to_json(orient='split')
 
 @api.route('')
-@api.route('/<int:id>')
+@api.route('/<string:id>')
 class Dataframe(Resource):
 
     def post(self):
         global df, split_json
         
         try:
-            id = self.nextIdx()
+            id = str(self.nextIdx())
             file = request.files.get('file')
         
             df[id] = pd.read_csv(file)
@@ -35,7 +35,7 @@ class Dataframe(Resource):
         global df, split_json
         
         try:
-            id = self.nextIdx()
+            id = str(self.nextIdx())
             file = request.files.get('file')
         
             df[id] = pd.read_csv(file)
@@ -52,13 +52,16 @@ class Dataframe(Resource):
         global df, split_json
         
         try:
-            if (id in df):
+            if id == 'sample':
+                df['sample'] = pd.read_csv('./sample.csv')
+            
+            if id in df:
                 return {
                     'id': id,
                     'data': split_json(df[id])
                 }
             
-            if (not df):
+            if not df:
                 return {
                     'data': None
                 }
@@ -88,14 +91,14 @@ class Dataframe(Resource):
         idx += 1
         return idx
 
-@api.route('/<int:id>/na')
+@api.route('/<string:id>/na')
 class Nullish(Resource):
 
     def get(self, id=-1):
         global df, split_json
         
         try:
-            if (id in df):
+            if id in df:
                 total_rows = df[id].shape[0]
                 count_per_column = df[id].count().to_list()
                 
@@ -131,7 +134,7 @@ class Nullish(Resource):
         except Exception as e:
             api.abort(500, message=e)
 
-@api.route('/<int:id>/describe')
+@api.route('/<string:id>/describe')
 class Describe(Resource):
 
     def get(self, id=-1):
@@ -176,7 +179,7 @@ class Describe(Resource):
         except Exception as e:
             api.abort(500, message=e)
 
-@api.route('/<int:id>/sort')
+@api.route('/<string:id>/sort')
 class Sort(Resource):
     
     def put(self, id=-1):
@@ -188,7 +191,7 @@ class Sort(Resource):
         ascending = bool(body.get('ascending'))
         
         try:
-            if (id in df):
+            if id in df:
                 
                 df[id].sort_values(by=column, ascending=ascending, inplace=True)
                 

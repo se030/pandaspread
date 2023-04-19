@@ -1,5 +1,11 @@
+import SampleCard from '@/components/\bSampleCard';
+
 const IndexPage = () => {
-  return <></>;
+  return (
+    <>
+      <SampleCard />
+    </>
+  );
 };
 
 export default IndexPage;
