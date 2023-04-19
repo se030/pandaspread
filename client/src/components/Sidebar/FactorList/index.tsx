@@ -49,7 +49,7 @@ const FactorList = () => {
             <ViewButton idx={idx} />
             <VisibilityButton idx={idx} />
             <CleanseButton column={el} naCount={naCounts && naCounts[idx]} />
-            <SortButton idx={idx} />
+            <SortButton column={el} />
           </div>
         </li>
       ))}

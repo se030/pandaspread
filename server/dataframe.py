@@ -175,3 +175,32 @@ class Describe(Resource):
             
         except Exception as e:
             api.abort(500, message=e)
+
+@api.route('/<int:id>/sort')
+class Sort(Resource):
+    
+    def put(self, id=-1):
+        global df, split_json
+        
+        body = request.get_json()
+        
+        column = body.get('column')
+        ascending = bool(body.get('ascending'))
+        
+        try:
+            if (id in df):
+                
+                df[id].sort_values(by=column, ascending=ascending, inplace=True)
+                
+                return {
+                    'id': id,
+                    'data': split_json(df[id])
+                }
+            
+            else:
+                return {
+                    'data': None
+                }
+            
+        except Exception as e:
+            api.abort(500, message=e)

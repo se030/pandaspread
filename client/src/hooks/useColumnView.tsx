@@ -1,4 +1,5 @@
 import { MouseEventHandler, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
 import { columnViewAtom } from '@/store/atom/columnView';
@@ -9,13 +10,15 @@ const useColumnView = (idx?: number) => {
 
   const [columnView, setColumnView] = useRecoilState(columnViewAtom);
 
+  const { id } = useParams();
+
   useEffect(() => {
     const initialState = Array.from({ length: columns.length }).fill(
       true,
     ) as boolean[];
 
     setColumnView(initialState);
-  }, [columns]);
+  }, [id]);
 
   if (idx === undefined) return { columnView };
 

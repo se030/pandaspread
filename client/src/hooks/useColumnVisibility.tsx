@@ -1,4 +1,5 @@
 import { MouseEventHandler, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
 import { columnVisibilityAtom } from '@/store/atom/coulmnVisibility';
@@ -10,13 +11,15 @@ const useColumnVisibility = (idx?: number) => {
   const [columnVisibility, setColumnVisibility] =
     useRecoilState(columnVisibilityAtom);
 
+  const { id } = useParams();
+
   useEffect(() => {
     const initialState = Array.from({ length: columns.length }).fill(
       true,
     ) as boolean[];
 
     setColumnVisibility(initialState);
-  }, [columns]);
+  }, [id]);
 
   if (idx === undefined) return { columnVisibility };
 

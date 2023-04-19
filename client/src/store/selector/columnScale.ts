@@ -22,7 +22,7 @@ export const columnScaleSelector = selector<ColumnScale[]>({
       cur.forEach((v, idx) => {
         const value = Number(v);
 
-        if (Number.isNaN(value)) {
+        if (Number.isNaN(value) || prev[idx] === -1) {
           prev[idx] = -1;
         } else if (prev[idx] < value) {
           prev[idx] = value;

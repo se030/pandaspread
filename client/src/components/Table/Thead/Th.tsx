@@ -2,6 +2,7 @@ import * as d3 from 'd3';
 import { useLayoutEffect, useRef } from 'react';
 
 import { ColumnContext } from '@/contexts/ColumnContext';
+import { useColumnView } from '@/hooks/useColumnView';
 import { useSafeContext } from '@/hooks/useSafeContext';
 import { theme } from '@/styles/theme';
 
@@ -9,12 +10,14 @@ interface Props {
   title: string;
   description: Description | undefined;
   hidden: boolean;
+  idx: number;
 }
 
-const Th = ({ hidden, title, description }: Props) => {
+const Th = ({ hidden, title, description, idx }: Props) => {
   const { columnRefs } = useSafeContext(ColumnContext);
 
   const svgRef = useRef<SVGSVGElement>(null);
+  const { columnView } = useColumnView();
 
   useLayoutEffect(() => {
     if (!svgRef.current) return;
@@ -22,7 +25,8 @@ const Th = ({ hidden, title, description }: Props) => {
     if (
       !description ||
       description.type === 'categorical' ||
-      description.data.length === 0
+      description.data.length === 0 ||
+      (columnView && !columnView[idx])
     ) {
       d3.select(svgRef.current).attr('width', 0).attr('height', 0);
       return;
@@ -63,7 +67,7 @@ const Th = ({ hidden, title, description }: Props) => {
       .attr('height', (d) => yScale(d))
       .attr('y', (d) => heightOccupancy - yScale(d))
       .attr('fill', theme.color.primary);
-  }, [description]);
+  }, [description, columnView?.[idx]]);
 
   return (
     <th hidden={hidden} ref={(ref) => ref && columnRefs.current.push(ref)}>
