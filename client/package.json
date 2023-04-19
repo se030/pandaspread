@@ -7,7 +7,6 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "postinstall": "husky install",
     "lint-staged": "lint-staged"
   },
   "lint-staged": {
