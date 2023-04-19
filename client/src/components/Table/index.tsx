@@ -65,7 +65,7 @@ const style = {
         gap: '1rem',
 
         '& > *:nth-of-type(1)': {
-          width: '60px', // Index column
+          width: indexColumnWidth,
         },
       },
     }),
@@ -108,5 +108,7 @@ const calcTableLayout = (
         ? '120px '
         : '')
     );
-  }, 'auto ');
+  }, `${indexColumnWidth} `);
 };
+
+const indexColumnWidth = '60px';
