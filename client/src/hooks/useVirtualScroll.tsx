@@ -22,12 +22,12 @@ const useVirtualScroll = (maxIndex: number) => {
     const endIndex = startIndex + currentVisibleNodes;
 
     // current startIndex x cover visible nodes
-    if (startIndex < start) {
+    if (startIndex - ROW.PADDED < start) {
       setStart(Math.max(0, startIndex - ROW.PADDED));
     }
 
     // current endIndex x cover visible nodes
-    if (start + offset < endIndex) {
+    if (start + offset < endIndex + ROW.PADDED) {
       setStart(Math.min(maxIndex, endIndex - ROW.VISIBLE));
     }
   }, [scrollTop]);
