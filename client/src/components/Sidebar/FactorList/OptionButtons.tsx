@@ -8,6 +8,7 @@ import { useRecoilState } from 'recoil';
 
 import { deleteNA } from '@/apis/dataframe-na';
 import { putSortBy } from '@/apis/dataframe-sort';
+import TinyLoader from '@/components/_common/Loader/TinyLoader';
 import { useColumnView } from '@/hooks/useColumnView';
 import { useColumnVisibility } from '@/hooks/useColumnVisibility';
 import { dataframeAtom } from '@/store/atom/dataframe';
@@ -54,21 +55,33 @@ export const CleanseButton = ({ column, naCount }: CleanseButtonProps) => {
   const { id } = useParams();
   const [, setDataframe] = useRecoilState(dataframeAtom);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const onCleanse: MouseEventHandler = async (e) => {
     e.stopPropagation();
 
     if (!id) return;
 
+    setIsLoading(true);
+
     const { data } = await deleteNA(id, column);
     setDataframe(data);
+
+    setIsLoading(false);
   };
 
   const { color } = useTheme();
 
   return (
-    <button css={style.button(color)} onClick={onCleanse}>
-      {naCount === null ? '' : naCount}
-      <AiOutlineClear className="icon" />
+    <button css={style.button(color)} className="cleanse" onClick={onCleanse}>
+      {isLoading ? (
+        <TinyLoader />
+      ) : (
+        <>
+          {naCount === null ? '' : naCount}
+          <AiOutlineClear className="icon" />
+        </>
+      )}
     </button>
   );
 };
@@ -78,37 +91,50 @@ export const SortButton = ({ column }: { column: string }) => {
   const [, setDataframe] = useRecoilState(dataframeAtom);
 
   const [isAscending, setIsAscending] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { color } = useTheme();
 
   const sortDataframe = async (id: string, isAsc: boolean) => {
     const { data } = await putSortBy(id, column, isAsc);
     setDataframe(data);
+
+    setIsLoading(false);
   };
 
-  const onSort: MouseEventHandler = async (e) => {
+  const onSort: MouseEventHandler = (e) => {
     e.stopPropagation();
 
     if (!id) return;
-    setIsAscending((prev) => {
-      sortDataframe(id, !prev);
-      return !prev;
-    });
 
-    const { currentTarget } = e;
-    document.querySelectorAll('.sort-button').forEach((el) => {
-      if (el === currentTarget) el.classList.add('active');
-      else el.classList.remove('active');
+    setIsAscending((prev) => {
+      setIsLoading(true);
+
+      sortDataframe(id, !prev);
+
+      const { currentTarget } = e;
+
+      document.querySelectorAll('.sort-button').forEach((el) => {
+        if (el === currentTarget) el.classList.add('active');
+        else el.classList.remove('active');
+      });
+
+      return !prev;
     });
   };
 
   return (
     <button css={style.button(color)} onClick={onSort} className="sort-button">
-      {isAscending ? (
-        <FaSortAmountUpAlt className="icon" />
-      ) : (
-        <FaSortAmountDown className="icon" />
-      )}
+      {
+        // eslint-disable-next-line no-nested-ternary
+        isLoading ? (
+          <TinyLoader />
+        ) : isAscending ? (
+          <FaSortAmountUpAlt className="icon" />
+        ) : (
+          <FaSortAmountDown className="icon" />
+        )
+      }
     </button>
   );
 };
@@ -134,6 +160,13 @@ const style = {
 
       '&.active': {
         color: primaryDark,
+      },
+
+      '&.cleanse': {
+        fontSize: '0.6rem',
+        '.icon': {
+          transform: 'translateY(1.15px)',
+        },
       },
     }),
   text: css({
