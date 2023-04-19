@@ -1,4 +1,4 @@
-import SampleCard from '@/components/\bSampleCard';
+import SampleCard from '@/components/SampleCard';
 
 const IndexPage = () => {
   return (
