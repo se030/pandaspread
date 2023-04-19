@@ -13,6 +13,7 @@ import {
   type ColumnScale,
   columnScaleSelector,
 } from '@/store/selector/columnScale';
+import { color } from '@/styles/theme';
 
 const Table = () => {
   const [{ data, columns }] = useRecoilState(dataframeAtom);
@@ -66,6 +67,16 @@ const style = {
 
         '& > *:nth-of-type(1)': {
           width: indexColumnWidth,
+        },
+
+        '&:hover': {
+          text: {
+            fill: color.black,
+
+            '&.contrast': {
+              fill: color.offwhite,
+            },
+          },
         },
       },
     }),
