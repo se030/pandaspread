@@ -5,7 +5,7 @@ import { useRecoilState } from 'recoil';
 import { columnViewAtom } from '@/store/atom/columnView';
 import { dataframeAtom } from '@/store/atom/dataframe';
 
-const useColumnView = (idx?: number) => {
+const useColumnView = (idx?: number, update = true) => {
   const [{ columns }] = useRecoilState(dataframeAtom);
 
   const [columnView, setColumnView] = useRecoilState(columnViewAtom);
@@ -13,6 +13,8 @@ const useColumnView = (idx?: number) => {
   const { id } = useParams();
 
   useEffect(() => {
+    if (!update) return;
+
     const initialState = Array.from({ length: columns.length }).fill(
       true,
     ) as boolean[];

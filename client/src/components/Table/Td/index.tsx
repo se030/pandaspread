@@ -14,7 +14,7 @@ interface Props {
 }
 
 const Td = ({ idx, value, hidden }: Props) => {
-  const { isVisualized } = useColumnView(idx);
+  const { isVisualized } = useColumnView(idx, false);
 
   const svgRef = useRef<SVGSVGElement>(null);
   const columnScale = useRecoilValue(columnScaleSelector);
@@ -28,23 +28,26 @@ const Td = ({ idx, value, hidden }: Props) => {
 
     const svg = d3.select(svgRef.current).attr('height', '1rem');
 
+    svg.selectChildren().remove();
+
     svg
       .append('rect')
       .attr('width', () => scaleWidth(Number(value)))
       .attr('height', '1rem')
       .attr('fill', () => scale.color(Number(value)));
 
+    const x = scaleWidth(Number(value));
+    const textLength = (`${value}`?.length ?? 0) * 7;
+    const isTextOverflown = x + textLength < widthOccupancy;
+
     svg
       .append('text')
       .text(value)
       .attr('fill', 'none')
       .attr('font-size', '12')
-      .attr('x', () => {
-        const x = scaleWidth(Number(value));
-        const textLength = (`${value}`?.length ?? 0) * 7;
-        return x + textLength < widthOccupancy ? x + 3 : x - textLength;
-      })
-      .attr('y', '12');
+      .attr('x', () => (isTextOverflown ? x + 3 : x - textLength - 3))
+      .attr('y', '12')
+      .attr('class', () => (isTextOverflown ? '' : 'contrast'));
   }, [isVisualized, columnScale]);
 
   const onToggleText: MouseEventHandler = (e) => {
@@ -76,9 +79,13 @@ const style = {
     }),
   svg: ({ black }: ThemeColor) =>
     css({
-      '&:hover, &.text': {
+      '&.text': {
         text: {
           fill: black,
+
+          '&.contrast': {
+            fill: 'white',
+          },
         },
       },
     }),
