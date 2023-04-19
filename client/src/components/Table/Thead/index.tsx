@@ -47,6 +47,7 @@ const Thead = () => {
             title={col}
             description={descriptions?.[idx]}
             hidden={!columnVisibility?.[idx]}
+            idx={idx}
           />
         ))}
       </tr>
