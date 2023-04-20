@@ -6,7 +6,7 @@ import { useRecoilState } from 'recoil';
 import Th from './Th';
 
 import { getDescription } from '@/apis/dataframe-describe';
-import { useColumnVisibility } from '@/hooks/useColumnVisibility';
+import { useColumnVisibility } from '@/hooks/store/useColumnVisibility';
 import { columnOrderAtom } from '@/store/atom/columnOrder';
 import { dataframeAtom } from '@/store/atom/dataframe';
 import { ThemeColor } from '@/styles/theme';

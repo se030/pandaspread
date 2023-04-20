@@ -2,8 +2,8 @@ import * as d3 from 'd3';
 import { useLayoutEffect, useRef } from 'react';
 
 import { ColumnContext } from '@/contexts/ColumnContext';
-import { useColumnView } from '@/hooks/useColumnView';
-import { useSafeContext } from '@/hooks/useSafeContext';
+import { useColumnView } from '@/hooks/store/useColumnView';
+import { useSafeContext } from '@/hooks/utils/useSafeContext';
 import { theme } from '@/styles/theme';
 
 interface Props {

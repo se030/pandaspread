@@ -9,8 +9,8 @@ import { useRecoilState } from 'recoil';
 import { deleteNA } from '@/apis/dataframe-na';
 import { putSortBy } from '@/apis/dataframe-sort';
 import TinyLoader from '@/components/_common/Loader/TinyLoader';
-import { useColumnView } from '@/hooks/useColumnView';
-import { useColumnVisibility } from '@/hooks/useColumnVisibility';
+import { useColumnView } from '@/hooks/store/useColumnView';
+import { useColumnVisibility } from '@/hooks/store/useColumnVisibility';
 import { dataframeAtom } from '@/store/atom/dataframe';
 import { ThemeColor } from '@/styles/theme';
 

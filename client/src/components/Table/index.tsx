@@ -5,8 +5,8 @@ import Td from './Td';
 import Thead from './Thead';
 
 import { ROW } from '@/constants/table-row';
-import { useColumnView } from '@/hooks/useColumnView';
-import { useColumnVisibility } from '@/hooks/useColumnVisibility';
+import { useColumnView } from '@/hooks/store/useColumnView';
+import { useColumnVisibility } from '@/hooks/store/useColumnVisibility';
 import { useVirtualScroll } from '@/hooks/useVirtualScroll';
 import { columnOrderAtom } from '@/store/atom/columnOrder';
 import { dataframeAtom } from '@/store/atom/dataframe';
