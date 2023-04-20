@@ -8,6 +8,7 @@ import { ROW } from '@/constants/table-row';
 import { useColumnView } from '@/hooks/useColumnView';
 import { useColumnVisibility } from '@/hooks/useColumnVisibility';
 import { useVirtualScroll } from '@/hooks/useVirtualScroll';
+import { columnOrderAtom } from '@/store/atom/columnOrder';
 import { dataframeAtom } from '@/store/atom/dataframe';
 import {
   type ColumnScale,
@@ -31,6 +32,8 @@ const Table = () => {
     columnView,
   );
 
+  const [columnOrder] = useRecoilState(columnOrderAtom);
+
   return (
     <table css={style.table(gridTemplateColumns)}>
       <Thead />
@@ -38,12 +41,16 @@ const Table = () => {
         {data.slice(start, start + offset).map((row, index) => (
           <tr key={index} css={scrollStyle(start + index)}>
             <td>{start + index}</td>
-            {row.map((value, idx) => (
-              <Td
-                key={`${idx}-${value}-${columnVisibility?.[idx]}`}
-                {...{ idx, value, hidden: !columnVisibility?.[idx] }}
-              />
-            ))}
+            {columnOrder.map((idx) => {
+              const value = row[idx];
+
+              return (
+                <Td
+                  key={`${idx}-${value}-${columnVisibility?.[idx]}`}
+                  {...{ idx, value, hidden: !columnVisibility?.[idx] }}
+                />
+              );
+            })}
           </tr>
         ))}
       </tbody>
