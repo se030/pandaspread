@@ -6,7 +6,7 @@ const SampleCard = () => {
 
   return (
     <div css={style.container} onClick={() => navigate('/data/sample')}>
-      <img width="500px" height="auto" src="/preview.png" />
+      <img width="500px" height="280px" src="/preview.png" />
       <p css={style.title}>
         <span className="title">Demo with sample data</span>
         <span>bike_buyers.csv</span>
