@@ -45,12 +45,12 @@ const FactorList = () => {
             {...provided.droppableProps}
           >
             {columns &&
-              columnOrder.map((idx) => {
+              columnOrder.map((idx, i) => {
                 const column = columns[idx];
 
                 return (
                   <FactorItem
-                    key={column}
+                    key={`${column}-${i}`}
                     idx={idx}
                     title={column}
                     naCount={naCounts && naCounts[idx]}

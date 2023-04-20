@@ -41,12 +41,12 @@ const Table = () => {
         {data.slice(start, start + offset).map((row, index) => (
           <tr key={index} css={scrollStyle(start + index)}>
             <td>{start + index}</td>
-            {columnOrder.map((idx) => {
+            {columnOrder.map((idx, i) => {
               const value = row[idx];
 
               return (
                 <Td
-                  key={`${idx}-${value}-${columnVisibility?.[idx]}`}
+                  key={`${idx}-${value}-${columnVisibility?.[idx]}-${i}`}
                   {...{ idx, value, hidden: !columnVisibility?.[idx] }}
                 />
               );

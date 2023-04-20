@@ -44,12 +44,12 @@ const Thead = () => {
         <th>
           Index<p>{data.length}</p>
         </th>
-        {columnOrder.map((idx) => {
+        {columnOrder.map((idx, i) => {
           const col = columns[idx];
 
           return (
             <Th
-              key={col}
+              key={`${col}-${i}`}
               title={col}
               description={descriptions?.[idx]}
               hidden={!columnVisibility?.[idx]}
