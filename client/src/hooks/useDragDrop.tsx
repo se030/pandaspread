@@ -14,13 +14,15 @@ const useDragDrop = () => {
     const { index: srcIdx } = source;
     const { index: destIdx } = destination;
 
+    if (srcIdx === destIdx) return;
+
     setColumnOrder((prev) => {
       if (srcIdx < destIdx) {
         return [
           ...prev.slice(0, srcIdx),
-          ...prev.slice(srcIdx + 1, destIdx),
+          ...prev.slice(srcIdx + 1, destIdx + 1),
           Number(target),
-          ...prev.slice(destIdx),
+          ...prev.slice(destIdx + 1),
         ];
       } else {
         return [

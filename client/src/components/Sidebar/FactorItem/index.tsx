@@ -12,14 +12,15 @@ import {
 
 interface Props {
   idx: number;
+  dragIdx: number;
   title: string;
   naCount: number | null;
   onSelect: MouseEventHandler<HTMLLIElement>;
 }
 
-const FactorItem = ({ idx, title, naCount, onSelect }: Props) => {
+const FactorItem = ({ idx, dragIdx, title, naCount, onSelect }: Props) => {
   return (
-    <Draggable index={idx} draggableId={`${idx}`}>
+    <Draggable index={dragIdx} draggableId={`${idx}`}>
       {(provided) => (
         <li
           key={idx}

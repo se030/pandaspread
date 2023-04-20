@@ -52,6 +52,7 @@ const FactorList = () => {
                   <FactorItem
                     key={`${column}-${i}`}
                     idx={idx}
+                    dragIdx={i}
                     title={column}
                     naCount={naCounts && naCounts[idx]}
                     onSelect={() => onClickFactor(idx)}
