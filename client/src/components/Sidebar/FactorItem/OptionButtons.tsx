@@ -1,8 +1,8 @@
 import { css, useTheme } from '@emotion/react';
 import { MouseEventHandler, useState } from 'react';
-import { AiOutlineClear } from 'react-icons/ai';
 import { BsEyeFill, BsEyeSlashFill } from 'react-icons/bs';
 import { FaSortAmountUpAlt, FaSortAmountDown } from 'react-icons/fa';
+import { FiTrash2 } from 'react-icons/fi';
 import { useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
@@ -79,7 +79,7 @@ export const CleanseButton = ({ column, naCount }: CleanseButtonProps) => {
       ) : (
         <>
           {naCount === null ? '' : naCount}
-          <AiOutlineClear className="icon" />
+          <FiTrash2 className="icon" />
         </>
       )}
     </button>
