@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
 import { MouseEventHandler } from 'react';
+import { Draggable } from 'react-beautiful-dnd';
 import { RxDragHandleDots2 } from 'react-icons/rx';
 
 import {
@@ -18,20 +19,29 @@ interface Props {
 
 const FactorItem = ({ idx, title, naCount, onSelect }: Props) => {
   return (
-    <li key={idx} onClick={onSelect}>
-      <div>
-        <button>
-          <RxDragHandleDots2 />
-        </button>
-        <span>{title}</span>
-      </div>
-      <div css={style.buttonGrid}>
-        <ViewButton idx={idx} />
-        <VisibilityButton idx={idx} />
-        <CleanseButton column={title} naCount={naCount} />
-        <SortButton column={title} />
-      </div>
-    </li>
+    <Draggable index={idx} draggableId={`${idx}`}>
+      {(provided) => (
+        <li
+          key={idx}
+          onClick={onSelect}
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+        >
+          <div>
+            <button {...provided.dragHandleProps}>
+              <RxDragHandleDots2 />
+            </button>
+            <span>{title}</span>
+          </div>
+          <div css={style.buttonGrid}>
+            <ViewButton idx={idx} />
+            <VisibilityButton idx={idx} />
+            <CleanseButton column={title} naCount={naCount} />
+            <SortButton column={title} />
+          </div>
+        </li>
+      )}
+    </Draggable>
   );
 };
 
