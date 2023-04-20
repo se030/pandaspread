@@ -1,15 +1,9 @@
 import { css, useTheme } from '@emotion/react';
 import { useEffect, useState } from 'react';
-import { RxDragHandleDots2 } from 'react-icons/rx';
 import { useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
-import {
-  CleanseButton,
-  SortButton,
-  ViewButton,
-  VisibilityButton,
-} from './OptionButtons';
+import FactorItem from '../FactorItem';
 
 import { getNACount } from '@/apis/dataframe-na';
 import { useClickFactor } from '@/hooks/useClickFactor';
@@ -38,20 +32,13 @@ const FactorList = () => {
   return (
     <ol css={style.ol(color)}>
       {columns?.map((el, idx) => (
-        <li key={idx} onClick={() => onClickFactor(idx)}>
-          <div>
-            <button>
-              <RxDragHandleDots2 />
-            </button>
-            <span>{el}</span>
-          </div>
-          <div css={style.buttonGrid}>
-            <ViewButton idx={idx} />
-            <VisibilityButton idx={idx} />
-            <CleanseButton column={el} naCount={naCounts && naCounts[idx]} />
-            <SortButton column={el} />
-          </div>
-        </li>
+        <FactorItem
+          key={el}
+          idx={idx}
+          title={el}
+          naCount={naCounts && naCounts[idx]}
+          onSelect={() => onClickFactor(idx)}
+        />
       ))}
     </ol>
   );
@@ -88,10 +75,4 @@ const style = {
         },
       },
     }),
-
-  buttonGrid: css({
-    display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
-    gap: '0.25rem',
-  }),
 };
