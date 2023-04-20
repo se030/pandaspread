@@ -1,4 +1,4 @@
-import { useSafeContext } from './useSafeContext';
+import { useSafeContext } from './utils/useSafeContext';
 
 import { ColumnContext } from '@/contexts/ColumnContext';
 

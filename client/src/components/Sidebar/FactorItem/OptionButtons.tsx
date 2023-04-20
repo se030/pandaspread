@@ -1,16 +1,16 @@
 import { css, useTheme } from '@emotion/react';
 import { MouseEventHandler, useState } from 'react';
-import { AiOutlineClear } from 'react-icons/ai';
 import { BsEyeFill, BsEyeSlashFill } from 'react-icons/bs';
 import { FaSortAmountUpAlt, FaSortAmountDown } from 'react-icons/fa';
+import { FiTrash2 } from 'react-icons/fi';
 import { useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
 import { deleteNA } from '@/apis/dataframe-na';
 import { putSortBy } from '@/apis/dataframe-sort';
 import TinyLoader from '@/components/_common/Loader/TinyLoader';
-import { useColumnView } from '@/hooks/useColumnView';
-import { useColumnVisibility } from '@/hooks/useColumnVisibility';
+import { useColumnView } from '@/hooks/store/useColumnView';
+import { useColumnVisibility } from '@/hooks/store/useColumnVisibility';
 import { dataframeAtom } from '@/store/atom/dataframe';
 import { ThemeColor } from '@/styles/theme';
 
@@ -79,7 +79,7 @@ export const CleanseButton = ({ column, naCount }: CleanseButtonProps) => {
       ) : (
         <>
           {naCount === null ? '' : naCount}
-          <AiOutlineClear className="icon" />
+          <FiTrash2 className="icon" />
         </>
       )}
     </button>

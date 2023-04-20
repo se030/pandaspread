@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import { useLayoutEffect, useState } from 'react';
 
-import { useSafeContext } from './useSafeContext';
+import { useSafeContext } from './utils/useSafeContext';
 
 import { ROW } from '@/constants/table-row';
 import { ScrollContext } from '@/contexts/ScrollContext';

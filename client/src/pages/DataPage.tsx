@@ -5,7 +5,7 @@ import Loader from '@/components/_common/Loader';
 import DataSection from '@/components/DataSection';
 import Sidebar from '@/components/Sidebar';
 import { ColumnContext } from '@/contexts/ColumnContext';
-import { useDataframe } from '@/hooks/useDataframe';
+import { useDataframe } from '@/hooks/store/useDataframe';
 
 const DataPage = () => {
   const { dataframe } = useDataframe();

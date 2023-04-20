@@ -1,15 +1,14 @@
 import { css } from '@emotion/react';
+import { useNavigate } from 'react-router-dom';
 
 import FAB from '../FAB';
 
-import { useRouter } from '@/hooks/useRouter';
-
 const Header = () => {
-  const { navigateHome } = useRouter();
+  const navigate = useNavigate();
 
   return (
     <header css={style.header}>
-      <button onClick={navigateHome}>🐼</button>
+      <button onClick={() => navigate('/')}>🐼</button>
       <FAB />
     </header>
   );

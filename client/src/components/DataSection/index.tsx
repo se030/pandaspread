@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import Table from '../Table';
 
 import { ScrollContext } from '@/contexts/ScrollContext';
-import { useThrottle } from '@/hooks/useThrottle';
+import { useThrottle } from '@/hooks/utils/useThrottle';
 
 const DataSection = () => {
   const [scrollTop, setScrollTop] = useState(0);

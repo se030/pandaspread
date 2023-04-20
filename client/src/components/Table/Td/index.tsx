@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 import { MouseEventHandler, useEffect, useRef } from 'react';
 import { useRecoilValue } from 'recoil';
 
-import { useColumnView } from '@/hooks/useColumnView';
+import { useColumnView } from '@/hooks/store/useColumnView';
 import { columnScaleSelector } from '@/store/selector/columnScale';
 import { ThemeColor } from '@/styles/theme';
 
