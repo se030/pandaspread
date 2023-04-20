@@ -9,6 +9,7 @@ import FactorItem from '../FactorItem';
 import { getNACount } from '@/apis/dataframe-na';
 import { useClickFactor } from '@/hooks/useClickFactor';
 import { useDragDrop } from '@/hooks/useDragDrop';
+import { columnOrderAtom } from '@/store/atom/columnOrder';
 import { dataframeAtom } from '@/store/atom/dataframe';
 import { ThemeColor } from '@/styles/theme';
 
@@ -31,6 +32,7 @@ const FactorList = () => {
 
   const { color } = useTheme();
 
+  const [columnOrder] = useRecoilState(columnOrderAtom);
   const dragDropProps = useDragDrop();
 
   return (
@@ -42,15 +44,20 @@ const FactorList = () => {
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
-            {columns?.map((el, idx) => (
-              <FactorItem
-                key={el}
-                idx={idx}
-                title={el}
-                naCount={naCounts && naCounts[idx]}
-                onSelect={() => onClickFactor(idx)}
-              />
-            ))}
+            {columns &&
+              columnOrder.map((idx) => {
+                const column = columns[idx];
+
+                return (
+                  <FactorItem
+                    key={column}
+                    idx={idx}
+                    title={column}
+                    naCount={naCounts && naCounts[idx]}
+                    onSelect={() => onClickFactor(idx)}
+                  />
+                );
+              })}
             {provided.placeholder}
           </ol>
         )}
