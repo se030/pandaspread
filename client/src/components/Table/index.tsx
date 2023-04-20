@@ -17,7 +17,7 @@ import {
 import { color } from '@/styles/theme';
 
 const Table = () => {
-  const [{ data, columns }] = useRecoilState(dataframeAtom);
+  const [{ data }] = useRecoilState(dataframeAtom);
 
   const { start, offset, style: scrollStyle } = useVirtualScroll(data.length);
 
@@ -25,14 +25,14 @@ const Table = () => {
   const { columnView } = useColumnView();
   const columnScale = useRecoilValue(columnScaleSelector);
 
+  const [columnOrder] = useRecoilState(columnOrderAtom);
+
   const gridTemplateColumns = calcTableLayout(
-    columns.length,
+    columnOrder,
     columnScale,
     columnVisibility,
     columnView,
   );
-
-  const [columnOrder] = useRecoilState(columnOrderAtom);
 
   return (
     <table css={style.table(gridTemplateColumns)}>
@@ -109,14 +109,14 @@ const style = {
 };
 
 const calcTableLayout = (
-  length: number,
+  columnOrder: number[],
   columnScale: ColumnScale[],
   columnVisibility?: boolean[],
   columnView?: boolean[],
 ) => {
   if (!columnVisibility || !columnView) return 'auto';
 
-  return Array.from({ length }).reduce((prev: string, _, idx) => {
+  return columnOrder.reduce((prev: string, idx) => {
     return (
       prev +
       // eslint-disable-next-line no-nested-ternary
