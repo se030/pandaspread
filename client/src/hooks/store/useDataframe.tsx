@@ -37,6 +37,14 @@ const useDataframe = () => {
     const { data } = state;
     setDataframe(data);
     setColumnOrder(data.columns.map((_: unknown, idx: number) => idx));
+
+    return () => {
+      setDataframe({
+        columns: [],
+        index: [],
+        data: [],
+      });
+    };
   }, []);
 
   return { dataframe };
