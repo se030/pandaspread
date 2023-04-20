@@ -3,6 +3,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
 import { getDataframe } from '@/apis/dataframe';
+import { columnOrderAtom } from '@/store/atom/columnOrder';
 import { dataframeAtom } from '@/store/atom/dataframe';
 
 const useDataframe = () => {
@@ -10,6 +11,7 @@ const useDataframe = () => {
   const { id } = useParams();
 
   const [dataframe, setDataframe] = useRecoilState(dataframeAtom);
+  const [, setColumnOrder] = useRecoilState(columnOrderAtom);
 
   const navigate = useNavigate();
 
@@ -23,6 +25,7 @@ const useDataframe = () => {
     }
 
     setDataframe(data);
+    setColumnOrder(data.columns.map((_, idx) => idx));
   };
 
   useEffect(() => {
@@ -31,7 +34,9 @@ const useDataframe = () => {
       return;
     }
 
-    setDataframe(state.data);
+    const { data } = state;
+    setDataframe(data);
+    setColumnOrder(data.columns.map((_: unknown, idx: number) => idx));
   }, []);
 
   return { dataframe };

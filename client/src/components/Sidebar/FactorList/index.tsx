@@ -1,18 +1,15 @@
 import { css, useTheme } from '@emotion/react';
 import { useEffect, useState } from 'react';
-import { RxDragHandleDots2 } from 'react-icons/rx';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
-import {
-  CleanseButton,
-  SortButton,
-  ViewButton,
-  VisibilityButton,
-} from './OptionButtons';
+import FactorItem from '../FactorItem';
 
 import { getNACount } from '@/apis/dataframe-na';
 import { useClickFactor } from '@/hooks/useClickFactor';
+import { useDragDrop } from '@/hooks/useDragDrop';
+import { columnOrderAtom } from '@/store/atom/columnOrder';
 import { dataframeAtom } from '@/store/atom/dataframe';
 import { ThemeColor } from '@/styles/theme';
 
@@ -35,40 +32,55 @@ const FactorList = () => {
 
   const { color } = useTheme();
 
+  const [columnOrder] = useRecoilState(columnOrderAtom);
+  const dragDropProps = useDragDrop();
+
   return (
-    <ol css={style.ol(color)}>
-      {columns?.map((el, idx) => (
-        <li key={idx} onClick={() => onClickFactor(idx)}>
-          <div>
-            <button>
-              <RxDragHandleDots2 />
-            </button>
-            <span>{el}</span>
-          </div>
-          <div css={style.buttonGrid}>
-            <ViewButton idx={idx} />
-            <VisibilityButton idx={idx} />
-            <CleanseButton column={el} naCount={naCounts && naCounts[idx]} />
-            <SortButton column={el} />
-          </div>
-        </li>
-      ))}
-    </ol>
+    <DragDropContext {...dragDropProps}>
+      <Droppable droppableId="factor-droppable">
+        {(provided) => (
+          <ol
+            css={style.ol(color)}
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+          >
+            {columns &&
+              columnOrder.map((idx, i) => {
+                const column = columns[idx];
+
+                return (
+                  <FactorItem
+                    key={`${column}-${i}`}
+                    idx={idx}
+                    dragIdx={i}
+                    title={column}
+                    naCount={naCounts && naCounts[idx]}
+                    onSelect={() => onClickFactor(idx)}
+                  />
+                );
+              })}
+            {provided.placeholder}
+          </ol>
+        )}
+      </Droppable>
+    </DragDropContext>
   );
 };
 
 export default FactorList;
 
 const style = {
-  ol: ({ gray100, black }: ThemeColor) =>
+  ol: ({ gray100, black, offwhite }: ThemeColor) =>
     css({
       li: {
         display: 'flex',
         alignItems: 'flex-start',
         justifyContent: 'space-between',
         padding: '1rem',
+        backgroundColor: offwhite,
         borderBottom: `1px solid ${gray100}`,
         cursor: 'pointer',
+
         ':hover': {
           fontWeight: 'bold',
         },
@@ -88,10 +100,4 @@ const style = {
         },
       },
     }),
-
-  buttonGrid: css({
-    display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
-    gap: '0.25rem',
-  }),
 };

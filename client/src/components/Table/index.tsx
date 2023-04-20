@@ -8,6 +8,7 @@ import { ROW } from '@/constants/table-row';
 import { useColumnView } from '@/hooks/useColumnView';
 import { useColumnVisibility } from '@/hooks/useColumnVisibility';
 import { useVirtualScroll } from '@/hooks/useVirtualScroll';
+import { columnOrderAtom } from '@/store/atom/columnOrder';
 import { dataframeAtom } from '@/store/atom/dataframe';
 import {
   type ColumnScale,
@@ -16,7 +17,7 @@ import {
 import { color } from '@/styles/theme';
 
 const Table = () => {
-  const [{ data, columns }] = useRecoilState(dataframeAtom);
+  const [{ data }] = useRecoilState(dataframeAtom);
 
   const { start, offset, style: scrollStyle } = useVirtualScroll(data.length);
 
@@ -24,8 +25,10 @@ const Table = () => {
   const { columnView } = useColumnView();
   const columnScale = useRecoilValue(columnScaleSelector);
 
+  const [columnOrder] = useRecoilState(columnOrderAtom);
+
   const gridTemplateColumns = calcTableLayout(
-    columns.length,
+    columnOrder,
     columnScale,
     columnVisibility,
     columnView,
@@ -38,12 +41,16 @@ const Table = () => {
         {data.slice(start, start + offset).map((row, index) => (
           <tr key={index} css={scrollStyle(start + index)}>
             <td>{start + index}</td>
-            {row.map((value, idx) => (
-              <Td
-                key={`${idx}-${value}-${columnVisibility?.[idx]}`}
-                {...{ idx, value, hidden: !columnVisibility?.[idx] }}
-              />
-            ))}
+            {columnOrder.map((idx, i) => {
+              const value = row[idx];
+
+              return (
+                <Td
+                  key={`${idx}-${value}-${columnVisibility?.[idx]}-${i}`}
+                  {...{ idx, value, hidden: !columnVisibility?.[idx] }}
+                />
+              );
+            })}
           </tr>
         ))}
       </tbody>
@@ -102,14 +109,14 @@ const style = {
 };
 
 const calcTableLayout = (
-  length: number,
+  columnOrder: number[],
   columnScale: ColumnScale[],
   columnVisibility?: boolean[],
   columnView?: boolean[],
 ) => {
   if (!columnVisibility || !columnView) return 'auto';
 
-  return Array.from({ length }).reduce((prev: string, _, idx) => {
+  return columnOrder.reduce((prev: string, idx) => {
     return (
       prev +
       // eslint-disable-next-line no-nested-ternary

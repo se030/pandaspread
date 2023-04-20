@@ -7,6 +7,7 @@ import Th from './Th';
 
 import { getDescription } from '@/apis/dataframe-describe';
 import { useColumnVisibility } from '@/hooks/useColumnVisibility';
+import { columnOrderAtom } from '@/store/atom/columnOrder';
 import { dataframeAtom } from '@/store/atom/dataframe';
 import { ThemeColor } from '@/styles/theme';
 
@@ -31,6 +32,8 @@ const Thead = () => {
 
   const { color } = useTheme();
 
+  const [columnOrder] = useRecoilState(columnOrderAtom);
+
   return (
     <thead
       css={style.thead(color)}
@@ -41,15 +44,19 @@ const Thead = () => {
         <th>
           Index<p>{data.length}</p>
         </th>
-        {columns.map((col, idx) => (
-          <Th
-            key={col}
-            title={col}
-            description={descriptions?.[idx]}
-            hidden={!columnVisibility?.[idx]}
-            idx={idx}
-          />
-        ))}
+        {columnOrder.map((idx, i) => {
+          const col = columns[idx];
+
+          return (
+            <Th
+              key={`${col}-${i}`}
+              title={col}
+              description={descriptions?.[idx]}
+              hidden={!columnVisibility?.[idx]}
+              idx={idx}
+            />
+          );
+        })}
       </tr>
     </thead>
   );
