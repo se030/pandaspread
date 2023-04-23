@@ -75,6 +75,7 @@ const style = {
       cursor: 'pointer',
 
       th: {
+        minHeight: '100px',
         padding: '2rem 1rem 1.5rem 1rem',
         fontWeight: 'bold',
 
