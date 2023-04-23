@@ -6,41 +6,26 @@
 
 <img
   src="https://user-images.githubusercontent.com/63814960/233793170-bae856a7-03af-4bae-a202-332c4af8063f.jpg"
-  width="1000"
+  width="725"
 />
 
 **파일 업로드 및 시각화**
 
-<img
-  src="https://user-images.githubusercontent.com/63814960/233833570-536b930e-b723-4034-8714-2e6fb2cceb64.gif"
-  width="1000"
-/>
+<img src="https://user-images.githubusercontent.com/63814960/233844928-34b39d5b-23b5-471e-b1ab-d5ed9e24d1fc.gif" width="725" />
 
 **요인 탐색**
 
-<img
-  src="https://user-images.githubusercontent.com/63814960/233836436-2e126218-e413-4dcc-85a6-0525894bda13.gif"
-  width="1000"
-/>
+<img src="https://user-images.githubusercontent.com/63814960/233844983-bbf228f3-2f9d-4990-b850-e72b8b811fc4.gif" width="725" />
 
-<img
-  src="https://user-images.githubusercontent.com/63814960/233836434-6151324e-d02d-4f4b-9da2-b8fa25a8e8e8.gif"
-  width="1000"
-/>
+<img src="https://user-images.githubusercontent.com/63814960/233844974-cb1a4958-77af-42b7-b48f-34c01876787b.gif" width="725" />
 
 **결측치 제거 및 정렬**
 
-<img
-  src="https://user-images.githubusercontent.com/63814960/233843977-c309e1c3-db3d-49c2-9288-ca757f67c6bf.gif"
-  width="1000"
-/>
+<img src="https://user-images.githubusercontent.com/63814960/233845082-8ef4820f-df64-429a-9fe4-1932de8dfc10.gif" width="725" />
 
 **가상 스크롤**
 
-<img
-  src="./docs/virtual-scroll.gif"
-  width="1000"
-/>
+<img src="https://user-images.githubusercontent.com/63814960/233844936-54379745-847d-4cbd-968d-a4a32fc1850c.gif" width="725" />
 
 ## 👷🏻‍♂️ 프로젝트 구조
 
