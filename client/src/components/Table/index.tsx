@@ -1,14 +1,15 @@
 import { css } from '@emotion/react';
+import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import Td from './Td';
 import Thead from './Thead';
 
 import { ROW } from '@/constants/table-row';
-import { useColumnView } from '@/hooks/store/useColumnView';
-import { useColumnVisibility } from '@/hooks/store/useColumnVisibility';
 import { useVirtualScroll } from '@/hooks/useVirtualScroll';
 import { columnOrderAtom } from '@/store/atom/columnOrder';
+import { columnViewAtom } from '@/store/atom/columnView';
+import { columnVisibilityAtom } from '@/store/atom/coulmnVisibility';
 import { dataframeAtom } from '@/store/atom/dataframe';
 import {
   type ColumnScale,
@@ -21,11 +22,23 @@ const Table = () => {
 
   const { start, offset, style: scrollStyle } = useVirtualScroll(data.length);
 
-  const { columnVisibility } = useColumnVisibility();
-  const { columnView } = useColumnView();
-  const columnScale = useRecoilValue(columnScaleSelector);
+  const [columnVisibility, setColumnVisibility] =
+    useRecoilState(columnVisibilityAtom);
+  const [columnView, setColumnView] = useRecoilState(columnViewAtom);
 
+  useEffect(() => {
+    const initialState = Array.from({ length: columns.length }).fill(
+      true,
+    ) as boolean[];
+
+    setColumnVisibility(initialState);
+    setColumnView(initialState);
+  }, []);
+
+  const columnScale = useRecoilValue(columnScaleSelector);
   const [columnOrder] = useRecoilState(columnOrderAtom);
+
+  const [{ columns }] = useRecoilState(dataframeAtom);
 
   const gridTemplateColumns = calcTableLayout(
     columnOrder,

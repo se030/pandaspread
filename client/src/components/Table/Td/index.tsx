@@ -14,7 +14,7 @@ interface Props {
 }
 
 const Td = ({ idx, value, hidden }: Props) => {
-  const { isVisualized } = useColumnView(idx, false);
+  const { isVisualized } = useColumnView(idx);
 
   const svgRef = useRef<SVGSVGElement>(null);
   const columnScale = useRecoilValue(columnScaleSelector);

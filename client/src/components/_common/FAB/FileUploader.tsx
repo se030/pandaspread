@@ -56,6 +56,6 @@ const FileUploader = () => {
 export default FileUploader;
 
 const style = {
-  label: css({ width: '100%', height: '100%' }),
+  label: css({ width: '100%', height: '100%', cursor: 'pointer' }),
   input: css({ display: 'none' }),
 };
